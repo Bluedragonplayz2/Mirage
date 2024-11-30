@@ -58,12 +58,12 @@ class Program
                     Console.WriteLine($"# {input}" + " ".PadRight(Console.WindowWidth));
                     Console.SetCursorPosition(0, 13);
                     Console.WriteLine(" ".PadRight(Console.WindowWidth));
-                    if (input == "yes")
+                    if (input.StartsWith("y"))
                     {
                         displayMessages = true;
                         return true;
                     }
-                    else if (input == "no")
+                    else if (input.StartsWith("n"))
                     {
                         displayMessages = true;
                         return false;
@@ -140,6 +140,16 @@ class Program
                         if (index != -1)
                         {
                             fileName = commandBreak[index + 1];
+                            if(commandBreak[index+1].StartsWith("\""))
+                            {
+                                while(!fileName.EndsWith("\""))
+                                {
+                                    index++;
+                                    fileName += " " + commandBreak[index+1];
+                                }
+                            }
+                            
+                           
                         }
                     }
 
