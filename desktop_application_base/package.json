@@ -1,15 +1,5 @@
 {
-  "name": "mir_map_tool",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "test": "npm run dev"
-  },
-  "author": "Bluedragonplayz2",
-  "license": "UNLICENSED",
   "devDependencies": {
-    "electron": "^32.1.2"
+    "electron": "^33.2.1"
   }
 }
