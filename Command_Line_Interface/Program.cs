@@ -407,6 +407,85 @@ class Program
                     
                     
                     
+                }else if (commandBreak[0] == "cf")
+                {
+                    String robotIp = null;
+                    String authId = null;
+                    if (commandBreak.Contains("--robot-ip"))
+                    {
+                        int index = commandBreak.IndexOf("--robot-ip");
+                        if (index != -1)
+                        {
+                            robotIp = commandBreak[index + 1];
+                        }
+                    }
+
+                    if (robotIp == null)
+                    {
+                        DisplayMessage("Enter Robot IP", ConsoleColor.Green);
+                        robotIp = Console.ReadLine();
+                        Console.SetCursorPosition(0, 12);
+                        Console.WriteLine($"# {robotIp}" + " ".PadRight(Console.WindowWidth));
+                        Console.SetCursorPosition(0, 13);
+                        Console.WriteLine(" ".PadRight(Console.WindowWidth));
+                        if (robotIp == null)
+                        {
+                            DisplayMessage("Invalid Robot IP, Exiting", ConsoleColor.Red);
+                            Main(args);
+                        }
+                    }
+
+                    if (authId == null)
+                    {
+                        DisplayMessage("Enter Auth ID", ConsoleColor.Green);
+                        authId = Console.ReadLine();
+                        Console.SetCursorPosition(0, 12);
+                        Console.WriteLine($"# {authId}" + " ".PadRight(Console.WindowWidth));
+                        Console.SetCursorPosition(0, 13);
+                        Console.WriteLine(" ".PadRight(Console.WindowWidth));
+                        if (authId == null)
+                        {
+                            DisplayMessage("Invalid Auth ID, Exiting", ConsoleColor.Red);
+                            Main(args);
+                        }
+                    }
+
+                    DisplayMessage($"Confirm Details | Robot IP: {robotIp} | Auth ID: {authId}", ConsoleColor.Green);
+                    String conf = Console.ReadLine();
+                    Console.SetCursorPosition(0, 12);
+                    Console.WriteLine($"# {conf}" + " ".PadRight(Console.WindowWidth));
+                    Console.SetCursorPosition(0, 13);
+                    Console.WriteLine(" ".PadRight(Console.WindowWidth));
+                    if (conf == "yes")
+                    {
+
+                        Console.WriteLine(robotIp+authId);
+
+                        running = "Clearing Footprints";
+                        MirRobotApi.MiRRobot miRRobot = new MirRobotApi.MiRRobot(robotIp, authId);
+                        try
+                        {
+                            ClearFootprint clearFootprint = new ClearFootprint(miRRobot);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.SetCursorPosition(0, 15);
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write(e.Message + e.StackTrace);
+                            Main(args);
+                        }
+                    }
+                    else
+                    {
+
+                        DisplayMessage("Exiting", ConsoleColor.Red);
+                        Main(args);
+
+                    }
+                    displayMessages = false;
+                    running = null;
+                    Task.Delay(100).Wait();
+                    DisplayMessage("Footprint Cleared", ConsoleColor.Green);
                 }
                 else
                 {
@@ -415,6 +494,7 @@ class Program
             }
         }
     }
+    String conf = Console.ReadLine();
 }
 
 
