@@ -2,9 +2,9 @@
 
 public class MapApi
 {
-    public List<MapApiSchema.GetMapSnapshot>? GetMap(ApiCaller caller)
+    public async Task<List<MapApiSchema.GetMapSnapshot>?> GetMap(ApiCaller caller)
     {
-        dynamic mapList = caller.GetApi("maps").Result;
+        dynamic mapList = await caller.GetApi("maps");
         if (mapList.Count == 0)
         {
             return null;
