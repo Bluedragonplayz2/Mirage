@@ -1,10 +1,11 @@
 ﻿# This is a Todo List for the project. It will be updated as the project progresses.
 
 ## Tool Core:
-- Implement Dashboard Api
+- ~~Implement Dashboard Api~~
 - Implement Settings Api
 - Implement Mission Api 
-- Implement Session Api - mainly for formality and fallback
+- Implement Session Api - mainly for formality and fallback 
+    - Add in the 4 Session Get Methods
 
 ### Task Handler part of core
 - Endpoint for handling syncronization of robot
