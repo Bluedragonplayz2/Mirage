@@ -8,7 +8,7 @@
     - Add in the 4 Session Get Methods
 
 ### Task Handler part of core
-- Endpoint for handling syncronization of robot
+- Endpoint for handling synchronization of robot
 - Handle object versioning 
 - handle robot information storage
 - Possible implementation of DB for object storage -- Not sure if this is needed
