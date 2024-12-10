@@ -2,12 +2,16 @@
 
 ## Tool Core:
 - ~~Implement Dashboard Api~~
-- Implement Settings Api
-- Implement Mission Api 
+- Implement Settings Api - Postpone indefinitely
+- ~~Implement Mission Api~~
 - Implement Session Api - mainly for formality and fallback 
     - Add in the 4 Session Get Methods
 
 ### Task Handler part of core
+- Logging
+- Yaml reader
+- Fleet Manager
+- Git Version Control
 - Endpoint for handling synchronization of robot
 - Handle object versioning 
 - handle robot information storage
