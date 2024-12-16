@@ -2,7 +2,7 @@
 
 public class MapApi
 {
-    public async Task<List<MapApiSchema.GetMapSnapshot>?> GetMap(ApiCaller caller)
+    public static async Task<List<MapApiSchema.GetMapSnapshot>?> GetMap(ApiCaller caller)
     {
         dynamic mapList = await caller.GetApi("maps");
         if (mapList.Count == 0)
@@ -22,7 +22,7 @@ public class MapApi
         return mapListSnapshot;
     }
 
-    public async Task<MapApiSchema.GetMapByGuidSnapshot> GetMapByGuid(ApiCaller caller, String guid)
+    public static async Task<MapApiSchema.GetMapByGuidSnapshot> GetMapByGuid(ApiCaller caller, String guid)
     {
         dynamic map = await caller.GetApi($"maps/{guid}");
         MapApiSchema.GetMapByGuidSnapshot mapSnapshot = new MapApiSchema.GetMapByGuidSnapshot();
@@ -37,7 +37,7 @@ public class MapApi
         return mapSnapshot;
     }
     
-    public async Task<String> PostMap(ApiCaller caller, String guid, String mapName, String baseMap, String siteId, float originX, float originY, float originTheta, float resolution)
+    public static  async Task<String> PostMap(ApiCaller caller, String guid, String mapName, String baseMap, String siteId, float originX, float originY, float originTheta, float resolution)
     {
         dynamic map = new
         {
@@ -53,7 +53,7 @@ public class MapApi
         dynamic response = await caller.PostApi("maps", map);
         return response.guid!;
     }
-    public async Task<String> PutMap(ApiCaller caller,  String guid, String mapName, String baseMap, String siteId, float originX, float originY, float originTheta, float resolution)
+    public static async Task<String> PutMap(ApiCaller caller,  String guid, String mapName, String baseMap, String siteId, float originX, float originY, float originTheta, float resolution)
     {
         dynamic map = new
         {

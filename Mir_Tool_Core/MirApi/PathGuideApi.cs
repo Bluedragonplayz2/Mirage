@@ -2,7 +2,7 @@
 
 public class PathGuideApi
 {
-    public async Task<List<PathGuideApiSchema.GetPathGuidesByMapSnapshot>?> GetPathGuidesByMap(ApiCaller caller, String mapId)
+    public static async Task<List<PathGuideApiSchema.GetPathGuidesByMapSnapshot>?> GetPathGuidesByMap(ApiCaller caller, String mapId)
     {
         dynamic pathGuideList = await caller.GetApi($"maps/{mapId}/path_guides");
         if (pathGuideList.Count == 0)
@@ -22,7 +22,7 @@ public class PathGuideApi
         return pathGuideListSnapshot;
     }
 
-    public async Task<PathGuideApiSchema.GetPathGuideByGuidSnapshot> GetPathGuideByGuid(ApiCaller caller, String guid)
+    public static async Task<PathGuideApiSchema.GetPathGuideByGuidSnapshot> GetPathGuideByGuid(ApiCaller caller, String guid)
     {
         dynamic pathGuideApi = await caller.GetApi($"path_guides/{guid}");
         PathGuideApiSchema.GetPathGuideByGuidSnapshot pathGuideSnapshot = new PathGuideApiSchema.GetPathGuideByGuidSnapshot();
@@ -30,7 +30,7 @@ public class PathGuideApi
         pathGuideSnapshot.Name = pathGuideApi.name!;
         return pathGuideSnapshot;
     }
-     public async Task<String> PostPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, String mapId)
+     public static async Task<String> PostPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, String mapId)
     {
         dynamic pathGuide = new
         {
@@ -54,7 +54,7 @@ public class PathGuideApi
         return response.guid!;
     }
      
-    public async Task<String> PutPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, String mapId)
+    public static async Task<String> PutPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, String mapId)
     {
         dynamic pathGuide = new
         {
@@ -63,7 +63,7 @@ public class PathGuideApi
         };
         dynamic response = await caller.PutApi($"path_guides/{guid}", pathGuide);
         //check if positions already exists
-        List<String>? positions = await new PositionApi().GetPositionsByPathGuide(caller, guid);
+        List<String>? positions = await PositionApi.GetPositionsByPathGuide(caller, guid);
         if (positions!.Any())
         {
             foreach (var pathPosition in pathPositions)
@@ -91,7 +91,7 @@ public class PathGuideApi
         
         return response.guid!;
     }
-    public void DeletePathGuidePosition(ApiCaller caller, String pathGuideGuid, String positionGuid)
+    public static void DeletePathGuidePosition(ApiCaller caller, String pathGuideGuid, String positionGuid)
     {
         caller.DeleteApi($"path_guides/{pathGuideGuid}/positions/{positionGuid}");
     }

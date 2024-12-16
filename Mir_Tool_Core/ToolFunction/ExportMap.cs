@@ -2,7 +2,7 @@
 
 public class ExportMap
 {
-    public ExportMap(String mapName, Robo)
+    public ExportMap(String mapName)
     {
         
     }

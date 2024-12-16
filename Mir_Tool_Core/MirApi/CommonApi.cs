@@ -2,7 +2,7 @@
 
 public class CommonApi
 {
-    public async Task<CommonApiSchema.RobotStatus> GetRobotStatus(ApiCaller caller)
+    public static async Task<CommonApiSchema.RobotStatus> GetRobotStatus(ApiCaller caller)
     {
         dynamic status = await caller.GetApi("status");
         CommonApiSchema.RobotStatus robotStatus = new CommonApiSchema.RobotStatus();
@@ -28,7 +28,7 @@ public class CommonApi
         return robotStatus;
     }
 
-    public void AdjustRobotMapAndPosition(ApiCaller caller, String mapId, Map.Position position)
+    public static void AdjustRobotMapAndPosition(ApiCaller caller, String mapId, Map.Position position)
     {
         dynamic status = new
         {

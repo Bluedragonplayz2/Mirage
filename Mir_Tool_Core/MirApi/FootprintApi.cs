@@ -2,7 +2,7 @@
 
 public class FootprintApi
 {
-    public async Task<List<FootprintApiSchema.GetFootprintsSnapshot>?> GetFootprints(ApiCaller caller)
+    public static async Task<List<FootprintApiSchema.GetFootprintsSnapshot>?> GetFootprints(ApiCaller caller)
     {
         dynamic footprintList = await caller.GetApi($"footprints");
         if (footprintList.Count == 0)
@@ -22,7 +22,7 @@ public class FootprintApi
         }
         return footprintListSnapshot;
     }
-    public async Task<FootprintApiSchema.GetFootprintByGuidSnapshot> GetFootprintByGuid(ApiCaller caller, String guid)
+    public static  async Task<FootprintApiSchema.GetFootprintByGuidSnapshot> GetFootprintByGuid(ApiCaller caller, String guid)
     {
         dynamic footprintApi = await caller.GetApi($"footprints/{guid}");
         FootprintApiSchema.GetFootprintByGuidSnapshot footprintSnapshot = new FootprintApiSchema.GetFootprintByGuidSnapshot();
@@ -42,7 +42,7 @@ public class FootprintApi
         }
         return footprintSnapshot;
     }
-    public async Task<String> PostFootprint(ApiCaller caller, String guid, String name, String configId,float height, List<FootprintApiSchema.GetFootprintByGuidSnapshot.Coordinates> footprintPoints)
+    public static async Task<String> PostFootprint(ApiCaller caller, String guid, String name, String configId,float height, List<FootprintApiSchema.GetFootprintByGuidSnapshot.Coordinates> footprintPoints)
     {
         dynamic footprint = new
         {
@@ -55,7 +55,7 @@ public class FootprintApi
         dynamic response = await caller.PostApi("footprints", footprint);
         return response.guid!;
     }
-    public async Task<String> PutFootprint(ApiCaller caller, String guid, String name, String configId, float height, List<FootprintApiSchema.GetFootprintByGuidSnapshot.Coordinates> footprintPoints)
+    public static async Task<String> PutFootprint(ApiCaller caller, String guid, String name, String configId, float height, List<FootprintApiSchema.GetFootprintByGuidSnapshot.Coordinates> footprintPoints)
     {
         dynamic footprint = new
         {
@@ -67,7 +67,7 @@ public class FootprintApi
         dynamic response = await caller.PutApi($"footprints/{guid}", footprint);
         return response.guid!;
     }
-    public void DeleteFootprint(ApiCaller caller, String guid)
+    public static void DeleteFootprint(ApiCaller caller, String guid)
     {
         caller.DeleteApi($"footprints/{guid}");
     }

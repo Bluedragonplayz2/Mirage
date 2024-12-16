@@ -2,7 +2,7 @@
 
 public class SessionApi
 {
-     public async Task<List<SessionApiSchema.GetSessionSnapshot>?> GetSessionSnapshot(ApiCaller caller,  String sessionId)
+     public static async Task<List<SessionApiSchema.GetSessionSnapshot>?> GetSessionSnapshot(ApiCaller caller)
      {
           dynamic sessionList = await caller.GetApi("sessions");
           if (sessionList.Count == 0)
@@ -21,7 +21,7 @@ public class SessionApi
 
           return sessionListSnapshot;
      }
-     public async Task<SessionApiSchema.GetSessionByGuidSnapshot> GetSessionByGuid(ApiCaller caller, String guid)
+     public static async Task<SessionApiSchema.GetSessionByGuidSnapshot> GetSessionByGuid(ApiCaller caller, String guid)
      {
           dynamic session = await caller.GetApi($"sessions/{guid}");
           SessionApiSchema.GetSessionByGuidSnapshot sessionSnapshot = new SessionApiSchema.GetSessionByGuidSnapshot();
@@ -31,7 +31,7 @@ public class SessionApi
           return sessionSnapshot;
      }
      
-     public async Task<String> PostSession(ApiCaller caller, String guid, String name, String description)
+     public static async Task<String> PostSession(ApiCaller caller, String guid, String name, String description)
      {
           dynamic session = new
           {
@@ -43,7 +43,7 @@ public class SessionApi
           return response.guid!;
      }
      
-     public async Task<String> PutSession(ApiCaller caller, String guid, String name, String description)
+     public static async Task<String> PutSession(ApiCaller caller, String guid, String name, String description)
      {
           dynamic session = new
           {
@@ -58,13 +58,13 @@ public class SessionApi
           caller.DeleteApi($"sessions/{guid}");
      }
      
-     public async Task<String> SessionExport(ApiCaller caller, String guid)
+     public static async Task<String> SessionExport(ApiCaller caller, String guid)
      {
           String response = await caller.GetApi($"sessions/{guid}/export");
           return response;
      }
 
-     public void SessionImport(ApiCaller caller, String file)
+     public static void SessionImport(ApiCaller caller, String file)
      {
           dynamic session = new { file };
           caller.PostApi("sessions/import", session);

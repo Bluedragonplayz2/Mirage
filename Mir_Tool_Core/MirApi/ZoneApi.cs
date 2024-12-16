@@ -2,7 +2,7 @@
 
 public class ZoneApi
 {
-    public async Task<List<ZoneApiSchema.GetZonesByMapSnapshot>?> GetZonesByMap(ApiCaller caller, String mapId)
+    public static async Task<List<ZoneApiSchema.GetZonesByMapSnapshot>?> GetZonesByMap(ApiCaller caller, String mapId)
     {
         dynamic zoneList = await caller.GetApi($"maps/{mapId}/zones");
         if (zoneList.Count == 0)
@@ -23,7 +23,7 @@ public class ZoneApi
         return zoneListSnapshot;
     }
     
-    public async Task<ZoneApiSchema.GetZoneByGuidSnaphot> GetZoneByGuid(ApiCaller caller, String guid)
+    public static async Task<ZoneApiSchema.GetZoneByGuidSnaphot> GetZoneByGuid(ApiCaller caller, String guid)
     {
         dynamic zoneApi = await caller.GetApi($"zones/{guid}");
         ZoneApiSchema.GetZoneByGuidSnaphot zoneSnapshot = new ZoneApiSchema.GetZoneByGuidSnaphot();
@@ -46,7 +46,7 @@ public class ZoneApi
         zoneSnapshot.Actions = zoneApi.actions!;
         return zoneSnapshot;
     }
-    public async Task<String> PostZone(ApiCaller caller, String guid, String name, String shapeType, int typeId, float strokeWidth, float direction, List<Map.Zone.Coordinates> polygon, dynamic actions, String mapId)
+    public static async Task<String> PostZone(ApiCaller caller, String guid, String name, String shapeType, int typeId, float strokeWidth, float direction, List<Map.Zone.Coordinates> polygon, dynamic actions, String mapId)
     {
         dynamic zone = new
         {
@@ -63,7 +63,7 @@ public class ZoneApi
         dynamic response = await caller.PostApi("zones", zone);
         return response.guid!;
     }
-    public async Task<String> PutZone(ApiCaller caller, String guid, String name, int typeId, float strokeWidth, float direction, List<Map.Zone.Coordinates> polygon, dynamic actions, String mapId)
+    public static async Task<String> PutZone(ApiCaller caller, String guid, String name, int typeId, float strokeWidth, float direction, List<Map.Zone.Coordinates> polygon, dynamic actions, String mapId)
     {
         dynamic zone = new
         {

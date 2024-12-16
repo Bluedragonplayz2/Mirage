@@ -2,7 +2,7 @@
 
 public class SoundApi
 {
-    public async Task<List<SoundApiSchema.GetSoundsSnapshot>> GetSounds(ApiCaller caller)
+    public static async Task<List<SoundApiSchema.GetSoundsSnapshot>> GetSounds(ApiCaller caller)
     {
         dynamic SoundsList = await caller.GetApi("sounds");
         if (SoundsList.Count == 0)
@@ -23,7 +23,7 @@ public class SoundApi
 
     }
 
-    public async Task<SoundApiSchema.GetSoundByGuidSnapshot> GetSoundsByGuid(ApiCaller caller, String guid)
+    public static async Task<SoundApiSchema.GetSoundByGuidSnapshot> GetSoundsByGuid(ApiCaller caller, String guid)
     {  
         dynamic sound = await caller.GetApi($"sounds/{guid}");
         SoundApiSchema.GetSoundByGuidSnapshot getSoundByGuidSnapshot = new SoundApiSchema.GetSoundByGuidSnapshot();
@@ -36,7 +36,7 @@ public class SoundApi
         getSoundByGuidSnapshot.Length = TimeSpan.Parse(sound.length);
         return getSoundByGuidSnapshot;
     }
-    public async Task<String> PostSound(ApiCaller caller, String guid, String name, String sound, String note, int volume)
+    public static async Task<String> PostSound(ApiCaller caller, String guid, String name, String sound, String note, int volume)
     {
         dynamic soundObject = new
         {
@@ -49,7 +49,7 @@ public class SoundApi
         dynamic response = await caller.PostApi("sounds", soundObject);
         return response.guid!;
     }
-    public async Task<String> PutSound(ApiCaller caller, String guid, String name, String sound, String note, int volume)
+    public static async Task<String> PutSound(ApiCaller caller, String guid, String name, String sound, String note, int volume)
     {
         dynamic soundObject = new
         {
@@ -61,7 +61,7 @@ public class SoundApi
         dynamic response = await caller.PutApi($"sounds/{guid}", soundObject);
         return response.guid!;
     }
-    public void DeleteSound(ApiCaller caller, String guid)
+    public static void DeleteSound(ApiCaller caller, String guid)
     {
         caller.DeleteApi($"sounds/{guid}");
     }

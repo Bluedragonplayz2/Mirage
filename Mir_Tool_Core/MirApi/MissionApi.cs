@@ -2,7 +2,7 @@
 
 public class MissionApi
 {
-    public async Task<List<MissionApiSchma.GetMissionSnapshot>?> GetMissions(ApiCaller caller)
+    public static async Task<List<MissionApiSchma.GetMissionSnapshot>?> GetMissions(ApiCaller caller)
     {
         dynamic missionList = await caller.GetApi($"missions");
         if (missionList.Count == 0)
@@ -21,7 +21,7 @@ public class MissionApi
         }
         return missionListSnapshot;
     }
-    public async Task<MissionApiSchma.GetMissionByGuidSnapshot> GetMissionByGuid(ApiCaller caller, string guid)
+    public static async Task<MissionApiSchma.GetMissionByGuidSnapshot> GetMissionByGuid(ApiCaller caller, string guid)
     {
         dynamic mission = await caller.GetApi($"missions/{guid}");
         MissionApiSchma.GetMissionByGuidSnapshot missionSnapshot = new MissionApiSchma.GetMissionByGuidSnapshot();
@@ -37,7 +37,7 @@ public class MissionApi
         missionSnapshot.HasUserParameters = mission.has_user_parameters!;
         return missionSnapshot;
     }
-    public async Task<string> PostMission(ApiCaller caller, string guid, string name, string description, string sessionId, string groupId, bool hidden)
+    public static async Task<string> PostMission(ApiCaller caller, string guid, string name, string description, string sessionId, string groupId, bool hidden)
     {
         dynamic mission = new
         {
@@ -52,7 +52,7 @@ public class MissionApi
         dynamic response = await caller.PostApi("missions", mission);
         return response.guid!;
     }
-    public async Task<string> PutMission(ApiCaller caller, string guid, string name, string description, string sessionId, string groupId, bool hidden)
+    public static async Task<string> PutMission(ApiCaller caller, string guid, string name, string description, string sessionId, string groupId, bool hidden)
     {
         dynamic mission = new
         {
@@ -69,7 +69,7 @@ public class MissionApi
     {
         caller.DeleteApi($"missions/{guid}");
     }
-    public async Task<List<MissionApiSchma.GetActionByMission>?> GetActionsByMission(ApiCaller caller, string missionGuid)
+    public static async Task<List<MissionApiSchma.GetActionByMission>?> GetActionsByMission(ApiCaller caller, string missionGuid)
     {
         dynamic actionList = await caller.GetApi($"missions/{missionGuid}/actions");
         if (actionList.Count == 0)
@@ -89,7 +89,7 @@ public class MissionApi
         }
         return actionListSnapshot;
     }
-    public async Task<MissionApiSchma.GetActionByGuid> GetActionByGuid(ApiCaller caller, string missionGuid, string actionGuid)
+    public static async Task<MissionApiSchma.GetActionByGuid> GetActionByGuid(ApiCaller caller, string missionGuid, string actionGuid)
     {
         dynamic action = await caller.GetApi($"missions/{missionGuid}/actions/{actionGuid}");
         MissionApiSchma.GetActionByGuid actionSnapshot = new MissionApiSchma.GetActionByGuid();
@@ -112,7 +112,7 @@ public class MissionApi
         actionSnapshot.ParametersList = parametersList;
         return actionSnapshot;
     }
-    public async Task<string> PostAction(ApiCaller caller, string guid, string name, string actionType, string missionId, int priority, string scopeReference, List<MissionApiSchma.GetActionByGuid.Parameter> parameterList)
+    public static async Task<string> PostAction(ApiCaller caller, string guid, string name, string actionType, string missionId, int priority, string scopeReference, List<MissionApiSchma.GetActionByGuid.Parameter> parameterList)
     {
         List<dynamic> parameters = [];
         foreach (var parameter in parameterList)
@@ -140,7 +140,7 @@ public class MissionApi
 
         return response.guid!;
     }
-    public async Task<string> PutAction(ApiCaller caller, string guid, string name, string actionType, string missionId, int priority, string scopeReference, List<MissionApiSchma.GetActionByGuid.Parameter> parameterList)
+    public static async Task<string> PutAction(ApiCaller caller, string guid, string name, string actionType, string missionId, int priority, string scopeReference, List<MissionApiSchma.GetActionByGuid.Parameter> parameterList)
     {
         List<dynamic> parameters = [];
         foreach (var parameter in parameterList)
@@ -166,7 +166,7 @@ public class MissionApi
 
         return response.guid!;
     }
-    public void DeleteAction(ApiCaller caller, string missionGuid, string actionGuid)
+    public static void DeleteAction(ApiCaller caller, string missionGuid, string actionGuid)
     {
         caller.DeleteApi($"missions/{missionGuid}/actions/{actionGuid}");
     }
