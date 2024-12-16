@@ -465,7 +465,7 @@ class Program
                         MirRobotApi.MiRRobot miRRobot = new MirRobotApi.MiRRobot(robotIp, authId);
                         try
                         {
-                            ClearFootprint clearFootprint = new ClearFootprint(miRRobot);
+                            ClearFootprint.ClearFootprintFromRobot(miRRobot);
                         }
                         catch (Exception e)
                         {

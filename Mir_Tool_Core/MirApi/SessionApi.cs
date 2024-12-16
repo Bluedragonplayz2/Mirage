@@ -53,7 +53,7 @@ public class SessionApi
           dynamic response = await caller.PutApi($"sessions/{guid}", session);
           return response.guid!;
      }
-     public void DeleteSession(ApiCaller caller, String guid)
+     public static void DeleteSession(ApiCaller caller, String guid)
      { 
           caller.DeleteApi($"sessions/{guid}");
      }
