@@ -160,7 +160,7 @@ public class MiRRobotApi
         }
 
         return map;
-5
+
     }
 
     public async void ImportMap(Map map, Boolean  bypassConfirmation, Func<String, Task<Boolean>>? confirmationMessage, Action<UpdateEventArgs> consoleMessage)
