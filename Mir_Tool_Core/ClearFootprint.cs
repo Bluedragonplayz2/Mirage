@@ -2,7 +2,8 @@
 
 public class ClearFootprint
 {
-    public ClearFootprint(MirRobotApi.MiRRobot robot)
+    //Todo: change this method to new robot object
+    public static void ClearFootprintFromRobot(MirRobotApi.MiRRobot robot)
     {
         ApiCaller apiCaller = new ApiCaller(robot.Ip, robot.AuthId);
         

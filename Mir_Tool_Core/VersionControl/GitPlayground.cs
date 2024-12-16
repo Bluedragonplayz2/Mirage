@@ -3,5 +3,5 @@
 
 public class GitPlayground
 {
-    LibGit2Sharp.
+
 }
