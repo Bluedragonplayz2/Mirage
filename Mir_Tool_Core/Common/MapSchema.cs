@@ -2,9 +2,9 @@
 
 public struct Map
 {
-    public String Guid;
-    public String Name;
-    public String SiteId;
+    public string Guid;
+    public string Name;
+    public string SiteId;
     public float OriginX;
     public float OriginY;
     public float Resolution;
@@ -12,12 +12,12 @@ public struct Map
     public List<Position>? Positions;
     public List<Zone>? Zones;
     public List<PathGuide>? PathGuides;
-    public String BaseMap;
+    public string BaseMap;
 
     public struct Position
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
         public float PosX;
         public float PosY;
         public float Orientation;
@@ -27,9 +27,9 @@ public struct Map
 
     public struct Zone
     {
-        public String Guid;
-        public String Name;
-        public String ShapeType;
+        public string Guid;
+        public string Name;
+        public string ShapeType;
         public int TypeId;
         public float StrokeWidth;
         public float Direction;
@@ -46,16 +46,16 @@ public struct Map
 
     public struct PathGuide
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
         public List<PathPosition> PathPositions;
 
         public struct PathPosition
         {
-            public String Guid;
-            public String PositionGuid;
+            public string Guid;
+            public string PositionGuid;
             public int Priority;
-            public String PositionType;
+            public string PositionType;
         }
     }
     
