@@ -8,7 +8,7 @@ public class YamlConfig
 {
     private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     
-    public static T? GetConfigFromFile<T>(string filePath) where T : struct
+    public static T? GetConfigFromFile<T>(string filePath) where T : class
     {
         if (File.Exists(filePath))
         {
