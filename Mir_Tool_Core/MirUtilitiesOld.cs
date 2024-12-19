@@ -1,4 +1,5 @@
 ﻿
+/*
 using Newtonsoft.Json;
 
 namespace Mir_Utilities;
@@ -358,7 +359,7 @@ public class MirUtilitiesOld
         await Task.WhenAll(getBasicMapInfo, getMapPositionsInfo, getMapZonesInfo, getMapPathGuidesInfo);
         
         return map;
-        */
+        #1#
     }
     
     private List<Map.Position> RemoveDuplicatedHelperPositions(List<Map.Position> positionList)
@@ -555,4 +556,4 @@ public class MirUtilitiesOld
 
 
     }
-}
+}*/

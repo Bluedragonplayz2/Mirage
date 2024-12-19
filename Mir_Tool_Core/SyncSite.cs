@@ -42,7 +42,13 @@ public class SyncSite
                 int i = sessionsSnapshot.FindIndex (s => s.Name == siteName);
                 if (i != -1)
                 {
-                    
+                    CommonApiSchema.RobotStatus status = CommonApi.GetRobotStatus(targetApi).Result;
+                    if (false)
+                    {
+                        //Todo: Safety checks 
+                    }
+                    Map.Position nullPos = new Map.Position()
+                    CommonApi.AdjustRobotMapAndPosition(targetApi, "",);
                     SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid);
                     //Todo: update this to the new robot object
                     MirRobotApi.MiRRobot legacyRobot = new MirRobotApi.MiRRobot(target.Ip, target.AuthId);

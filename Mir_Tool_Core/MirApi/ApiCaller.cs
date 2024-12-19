@@ -7,12 +7,15 @@ namespace Mir_Utilities;
 
 public class ApiCaller
 {
-    //This Class handles restsharp calling, Only ever create one RestClient, this is to minimise issues with port hording.
 
     //Default value of Mir Robots
     private const String _protocol = "http";
     private const String _apiVersion = "v2.0.0";
     
+    private bool _BatchMode = false;
+    private List<TaskCompletionSource<RestResponse>> _individualCompletionSources = new List<TaskCompletionSource<RestResponse>>();
+
+    private List<RestRequest> _batchRequests = new List<RestRequest>();
     
     public ApiCaller(String robotIp, String authId)
     {
@@ -34,6 +37,13 @@ public class ApiCaller
     private DateTime _tokenExpiry = DateTime.Now;
     private String _authToken = "";
     private readonly String _authId;
+    
+    public void SetBatchMode(bool batchMode)
+    {
+        _BatchMode = batchMode;
+        _batchRequests.Clear();
+        _individualCompletionSources.Clear(); 
+    }
 
 
     private async Task<RestResponse> RequestCaller(RestRequest request)
@@ -172,10 +182,94 @@ public class ApiCaller
             throw new HttpRequestException($"error occured when executing DELETE:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
         }
     }
+        public async Task<List<ApiResponse>> ExecuteBatchAsync()
+    {
+        if (!_BatchMode)
+        {
+            throw new InvalidOperationException("Batch mode is not enabled. Initialize batch mode using InitBatchMode().");
+        }
+
+        var batchPayload = new List<object>();
+
+        foreach (var request in _batchRequests)
+        {
+            var bodyParameter = request.Parameters.FirstOrDefault(p => p.Type == ParameterType.RequestBody);
+
+            var requestPayload = new object();
+            
+            if (bodyParameter != null)
+            {
+                 requestPayload = new
+                {
+                    method = request.Method.ToString(),
+                    url = request.Resource,
+                    body = bodyParameter.Value
+                };
+            }
+            else
+            {
+                 requestPayload = new
+                {
+                    method = request.Method.ToString(),
+                    url = request.Resource
+                };
+            }
+
+            batchPayload.Add(requestPayload);
+        }
+
+        var batchRequest = new RestRequest("/batch/", Method.Post)
+            .AddJsonBody(batchPayload);
+
+        _batchRequests.Clear(); // Clear the batch requests after executing
+
+        var response = await _client.ExecuteAsync(batchRequest);
+
+        var parsedResponses = ParseBatchResponse(response.Content);
+
+        // Assign individual responses to their respective tasks
+        for (int i = 0; i < parsedResponses.Count && i < _individualCompletionSources.Count; i++)
+        {
+            var taskSource = _individualCompletionSources[i];
+            var individualResponse = new RestResponse
+            {
+                StatusCode = (System.Net.HttpStatusCode)parsedResponses[i].Status,
+                Content = JsonConvert.SerializeObject(parsedResponses[i].Body),
+            };
+            taskSource.SetResult(individualResponse);
+        }
+
+        _individualCompletionSources.Clear();
+
+        return parsedResponses;
+    }
+
+    // Method to parse batch response content
+    private List<ApiResponse> ParseBatchResponse(string jsonResponse)
+    {
+        try
+        {
+            return JsonConvert.DeserializeObject<List<ApiResponse>>(jsonResponse);
+        }
+        catch (JsonException ex)
+        {
+            throw new InvalidOperationException("Failed to parse batch response.", ex);
+        }
+    }
+
+
+// Models for deserializing response
+
 
     ~ApiCaller()
     {
         _client.Dispose();
     }
 
+}
+public class ApiResponse
+{
+    public int Status { get; set; }
+    public object Body { get; set; }
+    public Dictionary<string, string> Headers { get; set; }
 }

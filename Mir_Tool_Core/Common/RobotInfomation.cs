@@ -21,7 +21,7 @@ public class RobotInfomation
         public Dictionary<string, Credential> credential;
         
     }
-    private static readonly string _robotConfigPath = "./config/robotConfig.json";
+    private static readonly string _robotConfigPath = "./config/robotConfig.yaml";
     public static List<RobotSchema.Robot> GetRobotsFromFleet(string fleetName)
     {
         RobotConfigSchema? robotConfig = YamlConfig.GetConfigFromFile<RobotConfigSchema>(_robotConfigPath);

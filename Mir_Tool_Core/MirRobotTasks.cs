@@ -1,4 +1,4 @@
-﻿namespace Mir_Utilities;
+﻿/*namespace Mir_Utilities;
 
 public class MiRRobotApi
 {
@@ -322,4 +322,4 @@ public class MiRRobotApi
         
         
     }
-}
+}*/
