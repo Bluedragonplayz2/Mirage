@@ -7,7 +7,6 @@ public class UpdateEventArgs: EventArgs
         COMPLETED,
         PARTIALFAILURE,
         FAILED,
-        RUNNING,
     }
     
     public TaskStatus Status;

@@ -21,7 +21,5 @@ public class ClearFootprint
                 apiCaller.DeleteApi("footprints/"+footprint.guid);
             }
         }
-        
-        
     }
 }

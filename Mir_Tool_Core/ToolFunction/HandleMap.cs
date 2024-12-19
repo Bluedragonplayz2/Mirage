@@ -1,8 +1,8 @@
 ﻿namespace Mir_Utilities.ToolFunction;
 
-public class ExportMap
+public class HandleMap
 {
-    public ExportMap(String mapName)
+    public HandleMap(String mapName)
     {
         
     }
