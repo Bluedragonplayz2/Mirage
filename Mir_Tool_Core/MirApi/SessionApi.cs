@@ -58,15 +58,29 @@ public class SessionApi
           caller.DeleteApi($"sessions/{guid}");
      }
      
-     public static async Task<String> SessionExport(ApiCaller caller, String guid)
+     public static async Task<byte[]> SessionExport(ApiCaller caller, String guid)
      {
-          String response = await caller.GetApi($"sessions/{guid}/export");
-          return response;
+          //Todo: Make sure this works
+          dynamic response = await caller.GetApi($"sessions/{guid}/export");
+          byte[] sessionInByte = response.RawBytes;
+          return sessionInByte;
      }
 
-     public static void SessionImport(ApiCaller caller, String file)
+     public static void SessionImport(ApiCaller caller, byte[] file)
      {
+          //Todo: Make sure this works
           dynamic session = new { file };
           caller.PostApi("sessions/import", session);
+     }
+     public static async Task<SessionApiSchema.GetActiveSessionImportSnapshot> GetActiveSessionImportSnapshot(ApiCaller caller)
+     {
+          //experimental 
+          dynamic response = await caller.GetApi("sessions/import");
+          SessionApiSchema.GetActiveSessionImportSnapshot snapshot = new SessionApiSchema.GetActiveSessionImportSnapshot();
+          snapshot.Status = response.status!;
+          snapshot.SessionsTotal = response.sessions_total!;
+          snapshot.SessionsImported = response.sessions_imported!;
+          snapshot.ErrorMessage = response.error_message!;
+          return snapshot;
      }
 }
