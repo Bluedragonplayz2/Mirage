@@ -1,12 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Console_Input;
 
-using Mir_Utilities;
-
-class Program
+public class Archieve
 {
-    static void Main(string[] args)
-    {
-        String Logo = """
+    /*String Logo = """
                __  __ _____ _____    _    _ _   _ _ _ _   _           
               |  \/  |_   _|  __ \  | |  | | | (_) (_) | (_)          
               | \  / | | | | |__) | | |  | | |_ _| |_| |_ _  ___  ___ 
@@ -494,11 +490,8 @@ class Program
             }
         }
     }
-    String conf = Console.ReadLine();
-}
-
-
-/*
+    String conf = Console.ReadLine();*/
+    /*
 
 Boolean Running = true;
 
@@ -578,3 +571,4 @@ while (!Running)
     }
 }
 */
+}
