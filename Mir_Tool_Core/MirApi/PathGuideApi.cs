@@ -1,4 +1,6 @@
-﻿namespace Mir_Utilities;
+﻿using Mir_Utilities.Common;
+
+namespace Mir_Utilities;
 
 public class PathGuideApi
 {

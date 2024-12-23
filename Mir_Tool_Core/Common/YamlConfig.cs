@@ -2,7 +2,7 @@
 using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 
-namespace Mir_Utilities;
+namespace Mir_Utilities.Common;
 
 public class YamlConfig
 {

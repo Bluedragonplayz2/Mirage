@@ -1,4 +1,4 @@
-﻿namespace Mir_Utilities;
+﻿namespace Mir_Utilities.Common;
 using System;
 using System.Security.Cryptography;
 using System.Text;
