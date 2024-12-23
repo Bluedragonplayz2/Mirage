@@ -2,6 +2,13 @@
 
 public class CommonApi
 {
+    public struct RobotPos
+    {
+        public float X;
+        public float Y;
+        public float Orientation;
+        public string MapId;
+    }
     public static async Task<CommonApiSchema.RobotStatus> GetRobotStatus(ApiCaller caller)
     {
         dynamic status = await caller.GetApi("status");
@@ -27,17 +34,19 @@ public class CommonApi
         robotStatus.SessionId = status.session_id!;
         return robotStatus;
     }
-
-    public static void AdjustRobotMapAndPosition(ApiCaller caller, String mapId, Map.Position position)
+    
+    
+    
+    public static void AdjustRobotMapAndPosition(ApiCaller caller, String mapId, CommonApiSchema.RobotStatus.Position newPos)
     {
         dynamic status = new
         {
             map_id = mapId,
             position = new
             {
-                x = position.PosX,
-                y = position.PosY,
-                orientation = position.Orientation
+                x = newPos.PosX,
+                y = newPos.PosY,
+                orientation = newPos.Orientation
             }
         };
 
