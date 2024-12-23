@@ -105,18 +105,26 @@ public class SyncSite
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("Invalid target robot format");
-                Console.ResetColor();
-                return;
+                List<RobotSchema.Robot> _targetRobots = RobotInfomation.GetRobotsFromFleet(targetRobot);
+                if (_targetRobots != null)
+                {
+                    targetRobotsInformation.AddRange(_targetRobots);
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid target robot format");
+                    Console.ResetColor();
+                    return;
+                }
             }
         }
         
         
         
         Mir_Utilities.SyncSite taskExec = new Mir_Utilities.SyncSite();
-        
         taskExec.TaskUpdateEvent += HandleUpdateEvent;
+        
         
 
     }
