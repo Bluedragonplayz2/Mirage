@@ -1,3 +1,18 @@
 ﻿robot:
-  WardRobot:
-    
+  <fleet name>:
+    <robot name>:
+      ip: <robot ip>
+      port: <robot port>
+      credential: <credential name>
+  FirstRobotFleet:
+    Robot001:
+      ip: 192.168.12.20
+      port: 443
+      credential: default
+credentials:
+  <credential name>:
+    username: <username>
+    password: <password>
+  default:
+    username: username
+    password: password
