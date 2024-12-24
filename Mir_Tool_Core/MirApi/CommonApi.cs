@@ -49,7 +49,7 @@ public class CommonApi
                 orientation = newPos.Orientation
             }
         };
-
+        caller.PutApi("status", status);
 
     }
 }

@@ -3,7 +3,7 @@
 public class ClearFootprint
 {
     //Todo: change this method to new robot object
-    public static void ClearFootprintFromRobot(MirRobotApi.MiRRobot robot)
+    public static void ClearFootprintFromRobot(MirRobotApi.MiRRobot robot, string siteName)
     {
         ApiCaller apiCaller = new ApiCaller(robot.Ip, robot.AuthId);
         
@@ -15,7 +15,9 @@ public class ClearFootprint
         dynamic footprints = apiCaller.GetApi("footprints").Result;
         foreach (dynamic footprint in footprints )
         {
-            string footprintCreatorId = apiCaller.GetApi("footprints/"+footprint.guid).Result.created_by_id;
+            dynamic footprintsnapshot =  apiCaller.GetApi("footprints/" + footprint.guid).Result;
+            string footprintCreatorId = footprintsnapshot.created_by_id;
+            string footprintSiteName = footprintsnapshot.site_name;
             if (footprintCreatorId == id)
             {
                 apiCaller.DeleteApi("footprints/"+footprint.guid);

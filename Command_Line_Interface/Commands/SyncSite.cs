@@ -85,7 +85,7 @@ public class SyncSite
                 if (targetRobotInformation == null)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Target robot not found");
+                    Console.WriteLine("Target robot not found from robot name");
                     Console.ResetColor();
                     return;
                 }
@@ -115,6 +115,7 @@ public class SyncSite
             }
             else
             {
+                Console.WriteLine(targetRobot);
                 List<RobotSchema.Robot> _targetRobots = RobotInfomation.GetRobotsFromFleet(targetRobot);
                 if (_targetRobots != null)
                 {
@@ -123,7 +124,7 @@ public class SyncSite
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("Invalid target robot format");
+                    Console.WriteLine("Invalid target robot format from fleet");
                     Console.ResetColor();
                     return;
                 }
@@ -214,7 +215,7 @@ public class SyncSite
                 }
 
                 output += "]";
-                Console.Write(output);
+                Console.WriteLine(output);
                 return;
             }
 
@@ -234,7 +235,7 @@ public class SyncSite
 
             output += "]";
 
-            Console.Write(output);
+            Console.WriteLine(output);
             return;
         }
 
@@ -247,13 +248,10 @@ public class SyncSite
                 if (line.Length + word.Length > workableSpace)
                 {
                     Console.WriteLine(line);
-                    line = "";
+                    break;
                 }
-
                 line += word + " ";
             }
-
-            Console.WriteLine(line);
         }
         else
         {

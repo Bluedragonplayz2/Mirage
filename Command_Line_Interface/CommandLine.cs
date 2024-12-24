@@ -2,11 +2,14 @@
 
 
 using Console_Input.Commands;
+using log4net.Config;
 
 class CommandLine
 {
     static void Main(string[] args)
     {
+        XmlConfigurator.ConfigureAndWatch(new FileInfo("log4net.config"));
+
         while (true)
         {
             string? input = Console.ReadLine().Trim();
@@ -84,6 +87,7 @@ class CommandLine
                 catch (Exception e)
                 {
                     Console.WriteLine("An Unexpected Error Occured While Executing SyncSite Command");
+                    Console.WriteLine(e.Message);
                     Console.WriteLine(e.StackTrace);
                     break;
                 }

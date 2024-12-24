@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Net;
 using Newtonsoft.Json;
 using RestSharp;
@@ -55,13 +56,13 @@ public class ApiCaller
             //if not get a new token
             GetMirToken();
         }
-        request.AddHeader("mir-auth-token:", _authToken);
+        request.AddHeader("mir-auth-token", _authToken);
         return await  _client.ExecuteAsync(request);
     }
 
     private void GetMirToken()
     {
-        var request = new RestRequest("auth", Method.Post);
+        var request = new RestRequest("users/auth", Method.Post);
         request.AddHeader("Authorization", _authId);
         RestResponse response = _client.Execute(request);
         if (response.IsSuccessful) 
@@ -78,8 +79,8 @@ public class ApiCaller
             {
                 dynamic body = JsonConvert.DeserializeObject(response.Content);
                 _authToken = body.token;
-                _tokenExpiry = DateTime.Parse(body.expiration_time, null,
-                    System.Globalization.DateTimeStyles.RoundtripKind);
+                DateTime expiry = body.expiration_time;
+                _tokenExpiry = expiry;
             }
         }
         else
@@ -123,27 +124,28 @@ public class ApiCaller
         var request = new RestRequest(url, Method.Post);
         request.AddJsonBody(content);
         RestResponse response = await RequestCaller(request);
-        if (response.IsSuccessful) 
+        if (response.IsSuccessful)
         {
             if (response.StatusCode == HttpStatusCode.NotFound)
             {
                 throw new FileNotFoundException($"error occured when executing POST:{url}");
             }
-            else if(response.Content == null)
+            if (response.Content == null)
             {
                 return true;
             }
-            else
+
+            dynamic? body = JsonConvert.DeserializeObject(response.Content);
+            if (body == null)
             {
-                dynamic? body = JsonConvert.DeserializeObject(response.Content);
-                if(body == null){ return true; }
-                return body;
+                return true;
             }
+
+            return body;
         }
-        else
-        {
-            throw new HttpRequestException($"error occured when executing POST:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
-        }
+
+        throw new HttpRequestException($"error occured when executing POST:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+
     }
 
     public async Task<dynamic> PutApi(String url, Object content)
@@ -173,7 +175,7 @@ public class ApiCaller
             throw new HttpRequestException($"error occured when executing PUT:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
         }
     }
-    public async void DeleteApi(String url)
+    public async Task<RestResponse> DeleteApi(String url)
     {
         var request = new RestRequest(url, Method.Delete);
         RestResponse response = await RequestCaller(request);
@@ -181,6 +183,8 @@ public class ApiCaller
         {
             throw new HttpRequestException($"error occured when executing DELETE:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
         }
+
+        return response;
     }
         public async Task<List<ApiResponse>> ExecuteBatchAsync()
     {
@@ -255,6 +259,66 @@ public class ApiCaller
         {
             throw new InvalidOperationException("Failed to parse batch response.", ex);
         }
+    }
+    
+    public async Task<dynamic> GetRawApi(String url)
+    {
+        var request = new RestRequest(url);
+        
+        RestResponse response = await RequestCaller(request);
+        if (response.IsSuccessful) 
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new FileNotFoundException($"error occured when executing GET:{url}");
+            }
+            else if(response.Content == null)
+            {
+                return true;
+            }
+            else
+            {   
+                byte[] body = response.RawBytes;
+                if(body == null){ return true; }
+                return body;
+            }
+        }
+        else
+        {
+            throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+        }
+
+       
+    }
+    public async Task<dynamic> PostFileApi(String url,string paramName , byte[] content, string fileName)
+    {
+        var request = new RestRequest(url, Method.Post);
+        request.AddFile(paramName, content, fileName, ContentType.Binary);
+        RestResponse response = await RequestCaller(request);
+        if (response.IsSuccessful)
+        {
+
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new FileNotFoundException($"error occured when executing POST:{url}");
+            }
+            if (response.Content == null)
+            {
+                return true;
+            }
+
+            dynamic? body = JsonConvert.DeserializeObject(response.Content);
+            if (body == null)
+            {
+                return true;
+            }
+
+            return body;
+        }
+
+
+        throw new HttpRequestException($"error occured when executing POST:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+
     }
 
 

@@ -21,14 +21,14 @@ public class CommonApiSchema
         public Position RobotPosition;
         public int BatteryTimeRemaining;
         public float BatteryPercentage;
-        public int MissionQueueId;
-        public String RobotName;
+        public string MissionQueueId;
+        public string RobotName;
         public int SerialNumber;
-        public String RobotModel;
+        public string RobotModel;
         public int StateId;
         public int ModeId;
-        public String MapId;
-        public String SessionId;
+        public string MapId;
+        public string SessionId;
     }
     
 }
