@@ -57,7 +57,30 @@ public class SyncSite
 
         void importSite(RobotSchema.Robot target, byte[] session)
         {
+            OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                StatusObject.TaskInterimEvent.EventLevel.INFO,
+                $"Starting site import on {target.Name}",
+                target.Name
+            ));
             ApiCaller targetApi = new ApiCaller(target.Ip, target.AuthId);
+            try
+            {
+                CommonApiSchema.RobotStatus s = CommonApi.GetRobotStatus(targetApi).Result;
+            }
+            catch
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"unable to reach {target.Name}",
+                    target.Name
+                ));
+                taskCompleteReport.PartialFailure(
+                        target.Name,
+                    $"unable to reach {target.Name}",
+                    new Exception("Failed to reach target"),
+                    new StackTrace()
+                );
+            }
             List<SessionApiSchema.GetSessionSnapshot>? sessionsSnapshot = SessionApi.GetSessionSnapshot(targetApi).Result;
             CommonApiSchema.RobotStatus status = new CommonApiSchema.RobotStatus();
             if (sessionsSnapshot != null)
@@ -81,15 +104,92 @@ public class SyncSite
                     MirRobotApi.MiRRobot legacyRobot = new MirRobotApi.MiRRobot(target.Ip, target.AuthId);
                     ClearFootprint.ClearFootprintFromRobot(legacyRobot);
                     Thread.Sleep(5000);
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Deleted existing site {target.Name}",
+                        target.Name
+                    ));
+                    
                 }
             }
+            SessionApiSchema.GetActiveSessionImportSnapshot sessionImport = new SessionApiSchema.GetActiveSessionImportSnapshot();
+            try
+            {
+                sessionImport = SessionApi.SessionImport(targetApi, session).Result;
+                
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.INFO,
+                    $"Importing:0",
+                    target.Name
+                ));
+                Thread.Sleep(1000);
+            }
+            catch
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"Unable to start import site data to {target.Name}",
+                    target.Name
+                )); 
+                taskCompleteReport.PartialFailure(
+                    target.Name,
+                    $"Unable to start import site data to {target.Name}",
+                    new Exception("Failed to start import"),
+                    new StackTrace()
+                );
+            }
 
+            try
+            {
+                while (sessionImport.Status == 1)
+                {
+                    sessionImport = SessionApi.GetActiveSessionImportSnapshot(targetApi).Result;
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Importing:{(sessionImport.SessionsImported * 100 )/sessionImport.SessionsTotal}",
+                        target.Name
+                    ));
+                    Thread.Sleep(1000);
+                }
 
-            
-            SessionApi.SessionImport(targetApi, session);
-            
-            
-            
+                if (sessionImport.Status == 2)
+                {
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                        sessionImport.ErrorMessage,
+                        target.Name
+                    )); 
+                    taskCompleteReport.PartialFailure(
+                        target.Name,
+                        sessionImport.ErrorMessage,
+                        new Exception("Failed to import site"),
+                        new StackTrace()
+                    );
+                }
+                else
+                {
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Imported site data to {target.Name}",
+                        target.Name
+                    ));
+                }
+
+            }
+            catch
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"Unable to get import status from {target.Name}",
+                    target.Name
+                )); 
+                taskCompleteReport.PartialFailure(
+                    target.Name,
+                    $"Unable to get import status from {target.Name}",
+                    new Exception("Failed to get import status"),
+                    new StackTrace()
+                );
+            }
             /*
             if (status.Equals(new CommonApiSchema.RobotStatus()))
             {
@@ -97,7 +197,6 @@ public class SyncSite
             }*/
             
         }
-
         return taskCompleteReport;
     }
 

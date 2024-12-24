@@ -66,11 +66,17 @@ public class SessionApi
           return sessionInByte;
      }
 
-     public static void SessionImport(ApiCaller caller, byte[] file)
+     public static async Task<SessionApiSchema.GetActiveSessionImportSnapshot> SessionImport(ApiCaller caller, byte[] file)
      {
           //Todo: Make sure this works
           dynamic session = new { file };
-          caller.PostApi("sessions/import", session);
+          dynamic response = caller.PostApi("sessions/import", session);
+          SessionApiSchema.GetActiveSessionImportSnapshot snapshot = new SessionApiSchema.GetActiveSessionImportSnapshot();
+          snapshot.Status = response.status!;
+          snapshot.SessionsTotal = response.sessions_total!;
+          snapshot.SessionsImported = response.sessions_imported!;
+          snapshot.ErrorMessage = response.error_message!;
+          return snapshot;
      }
      public static async Task<SessionApiSchema.GetActiveSessionImportSnapshot> GetActiveSessionImportSnapshot(ApiCaller caller)
      {

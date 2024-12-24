@@ -79,7 +79,7 @@ class CommandLine
                 //syncsite [options]  <source> <targets> <site name>
                 try
                 {
-                    SyncSite.CommandHandler(arguments, flags, options);
+                    new SyncSite().CommandHandler(arguments, flags, options);
                 }
                 catch (Exception e)
                 {
