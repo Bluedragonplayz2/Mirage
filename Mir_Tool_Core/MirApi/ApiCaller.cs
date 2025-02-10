@@ -320,6 +320,67 @@ public class ApiCaller
         throw new HttpRequestException($"error occured when executing POST:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
 
     }
+    public async Task<dynamic> PostRawApi(String url, Object content,string paramName , byte[] byteContent)
+    {
+        var request = new RestRequest(url, Method.Post);
+        request.AddJsonBody(content);
+        request.AddParameter(paramName, byteContent, ParameterType.RequestBody);
+        RestResponse response = await RequestCaller(request);
+        if (response.IsSuccessful)
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new FileNotFoundException($"error occured when executing POST:{url}");
+            }
+            if (response.Content == null)
+            {
+                return true;
+            }
+
+            dynamic? body = JsonConvert.DeserializeObject(response.Content);
+            if (body == null)
+            {
+                return true;
+            }
+
+            return body;
+        }
+
+        throw new HttpRequestException($"error occured when executing POST:{url}, Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+
+    }
+
+    public async Task<dynamic> GetTimedApi(String url)
+    {
+        var request = new RestRequest(url);
+        request.Timeout = TimeSpan.FromSeconds(1);
+        RestResponse response = await RequestCaller(request);
+        if (response.IsSuccessful) 
+        {
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                throw new FileNotFoundException($"error occured when executing GET:{url}");
+            }
+            else if(response.Content == null)
+            {
+                return true;
+            }
+            else
+            {   
+                dynamic? body = JsonConvert.DeserializeObject(response.Content);
+                if(body == null){ return true; }
+                return body;
+            }
+        }
+        else
+        {
+            throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+        }
+
+       
+    }
+
+    
 
 
 // Models for deserializing response

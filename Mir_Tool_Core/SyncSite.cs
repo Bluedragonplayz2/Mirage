@@ -50,11 +50,15 @@ public class SyncSite
         List<Task> importingTasks = new List<Task>();
         foreach (RobotSchema.Robot target in targets)
         {
-            Task task = Task.Run(() =>
-            {
-                importSite(target, session);
-            });
-            importingTasks.Add(task);
+            if (!(target == source))
+            { 
+                Task task = Task.Run(() =>
+                {
+                    importSite(target, session);
+                });
+                importingTasks.Add(task);
+            }
+            
         }
         Task.WaitAll(importingTasks.ToArray());
         
@@ -62,6 +66,7 @@ public class SyncSite
 
         void importSite(RobotSchema.Robot target, byte[] session)
         {
+
             OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
                 StatusObject.TaskInterimEvent.EventLevel.INFO,
                 $"Starting site import on {target.Name}",
@@ -70,7 +75,7 @@ public class SyncSite
             ApiCaller targetApi = new ApiCaller(target.Ip, target.AuthId);
             try
             {
-                CommonApiSchema.RobotStatus s = CommonApi.GetRobotStatus(targetApi).Result;
+                CommonApi.VerifyRobotConnection(targetApi);
             }
             catch (Exception e)
             {
@@ -103,9 +108,35 @@ public class SyncSite
                     nullPos.PosX = 0;
                     nullPos.PosY = 0;
                     nullPos.Orientation = 0;
+                    try
+                    {
+                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.PAUSED);
+                        Thread.Sleep(100);
+                        CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000", nullPos);
+                        Thread.Sleep(100);
+                        MissionQueueApi.ClearMissionQueue(targetApi);
+                        Thread.Sleep(100);
+                        String s = SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid).Result;
+                        Thread.Sleep(100);
+                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.RESUME);
+                        Thread.Sleep(100);
+                    }
+                    catch (Exception e)
+                    {
+                        OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                            StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                            $"Unable to place {target.Name} into configure site",
+                            target.Name
+                        )); 
+                        taskCompleteReport.PartialFailure(
+                            target.Name,
+                            $"Unable to start import site data to {target.Name}",
+                            e,
+                            new StackTrace()
+                        );
+                        return;
+                    }
 
-                    CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000",nullPos);
-                    String s = SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid).Result;
                     OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
                         StatusObject.TaskInterimEvent.EventLevel.INFO,
                         $"Deleted existing site {target.Name}",

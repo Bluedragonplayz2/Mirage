@@ -24,6 +24,8 @@ public class SyncSite
     private List<RobotSchema.Robot> _targetRobots;
     private string _siteName;
     private Dictionary<string, int[]> _curserPositions = new Dictionary<string, int[]>();
+    private int[] _endCursorPosition = new int[2];
+    private static readonly object consolePointer = new object();
 
     public void CommandHandler(List<string> arguments, List<string> flags, List<string> options)
     {
@@ -39,6 +41,7 @@ public class SyncSite
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Source robot not found");
+                _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                 Console.ResetColor();
                 return;
             }
@@ -58,6 +61,7 @@ public class SyncSite
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Invalid source robot format");
+                _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                 Console.ResetColor();
                 return;
             }
@@ -66,6 +70,7 @@ public class SyncSite
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Invalid source robot format");
+            _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
             Console.ResetColor();
             return;
         }
@@ -86,6 +91,7 @@ public class SyncSite
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Target robot not found from robot name");
+                    _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                     Console.ResetColor();
                     return;
                 }
@@ -109,6 +115,7 @@ public class SyncSite
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid target robot format");
+                    _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                     Console.ResetColor();
                     return;
                 }
@@ -125,6 +132,7 @@ public class SyncSite
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid target robot format from fleet");
+                    _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                     Console.ResetColor();
                     return;
                 }
@@ -137,125 +145,138 @@ public class SyncSite
         taskExec.TaskUpdateEvent += HandleUpdateEvent;
         StatusObject.TaskCompleteReport report =
             taskExec.SyncSiteData(sourceRobotInformation, targetRobotsInformation, siteName);
-        if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.FAILED)
+        lock (consolePointer)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Task failed");
-            Console.WriteLine(report.StatusMessage);
-            Console.ResetColor();
-            foreach (var failure in report.FailureObjects)
+            if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.FAILED)
             {
-                Console.WriteLine(failure.Message);
-                Console.WriteLine(failure.Exception);
-                Console.WriteLine(failure.StackTrace);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Task failed");
+                Console.WriteLine(report.StatusMessage);
+                Console.ResetColor();
+                foreach (var failure in report.FailureObjects)
+                {
+                    Console.WriteLine(failure.Message);
+                    Console.WriteLine(failure.Exception);
+                    Console.WriteLine(failure.StackTrace);
+                }
             }
-        }
-        else if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.COMPLETED)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Task Complete");
-            Console.WriteLine(report.StatusMessage);
-            Console.ResetColor();
-        }
-        else if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.PARTIALFAILURE)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Task Complete but with issues");
-            Console.ForegroundColor = ConsoleColor.Red;
-            foreach (var failure in report.FailureObjects)
+            else if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.COMPLETED)
             {
-                Console.WriteLine(failure.Message);
-                Console.WriteLine(failure.Exception);
-                Console.WriteLine(failure.StackTrace);
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Task Complete");
+                Console.WriteLine(report.StatusMessage);
+                Console.ResetColor();
             }
+            else if (report.Status == StatusObject.TaskCompleteReport.TaskStatus.PARTIALFAILURE)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Task Complete but with issues");
+                Console.ForegroundColor = ConsoleColor.Red;
+                foreach (var failure in report.FailureObjects)
+                {
+                    Console.WriteLine(failure.Message);
+                    Console.WriteLine(failure.Exception);
+                    Console.WriteLine(failure.StackTrace);
+                }
 
-            Console.ResetColor();
+                Console.ResetColor();
+            }
         }
+        
     }
 
     private void HandleUpdateEvent(object? sender, StatusObject.TaskInterimEvent e)
     {
-        if (e.RobotName == null)
+        lock (consolePointer)
         {
-            Console.WriteLine($"{e.Message}");
-            if (e.Exception != null)
+
+            if (e.RobotName == null)
             {
-                Console.WriteLine(e.Exception);
-                Console.WriteLine(e.StackTrace);
+                Console.WriteLine($"{e.Message}");
+                if (e.Exception != null)
+                {
+                    Console.WriteLine(e.Exception);
+                    Console.WriteLine(e.StackTrace);
+                }
+
+                _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
+                return;
             }
 
-            return;
-        }
-
-        if (!_curserPositions.ContainsKey(e.RobotName))
-        {
-            Console.Write(e.RobotName + ": ");
-            int[] currentCursorPosition = new[] { Console.CursorLeft, Console.CursorTop };
-            Console.WriteLine();
-            _curserPositions.Add(e.RobotName, currentCursorPosition);
-        }
-
-        _curserPositions.TryGetValue(e.RobotName, out int[] cursorPosition);
-        Console.SetCursorPosition(cursorPosition[0], cursorPosition[1]);
-        int workableSpace = (int)Math.Floor(Console.WindowWidth * 0.60);
-        if (workableSpace < 15)
-        {
-            return;
-        }
-
-        if (e.Message.StartsWith("Importing"))
-        {
-            string output = "Importing:[";
-            int progressPercentage = int.Parse(e.Message.Split(":")[1]);
-            if (progressPercentage == 0)
+            if (!_curserPositions.ContainsKey(e.RobotName))
             {
-                for (int i = 0; i < (workableSpace - 12); i++)
+                Console.Write(e.RobotName + ": ");
+                int[] currentCursorPosition = new[] { Console.CursorLeft, Console.CursorTop };
+                Console.WriteLine();
+                _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
+                _curserPositions.Add(e.RobotName, currentCursorPosition);
+            }
+
+            _curserPositions.TryGetValue(e.RobotName, out int[] cursorPosition);
+            Console.SetCursorPosition(cursorPosition[0], cursorPosition[1]);
+            int workableSpace = (int)Math.Floor(Console.WindowWidth * 0.60);
+            if (workableSpace < 15)
+            {
+                return;
+            }
+
+            if (e.Message.StartsWith("Importing"))
+            {
+                string output = "Importing:[";
+                int progressPercentage = int.Parse(e.Message.Split(":")[1]);
+                if (progressPercentage == 0)
+                {
+                    for (int i = 0; i < (workableSpace - 12); i++)
+                    {
+                        output += " ";
+                    }
+
+                    output += "]";
+                    Console.WriteLine(output);
+                    return;
+                }
+
+                float progress = (float)progressPercentage / 100;
+                int progressLength = (int)Math.Floor(progress * (workableSpace - 12));
+                int remainder = (workableSpace - 12) - progressLength;
+                for (int i = 0; i < (progressLength - 1); i++)
+                {
+                    output += "=";
+                }
+
+                output += ">";
+                for (int i = 0; i < remainder; i++)
                 {
                     output += " ";
                 }
 
                 output += "]";
+
                 Console.WriteLine(output);
                 return;
             }
 
-            float progress = (float)progressPercentage / 100;
-            int progressLength = (int)Math.Floor(progress * (workableSpace - 12));
-            int remainder = (workableSpace - 12) - progressLength;
-            for (int i = 0; i < (progressLength - 1); i++)
+            if (e.Message.Length > workableSpace)
             {
-                output += "=";
-            }
-
-            output += ">";
-            for (int i = 0; i < remainder; i++)
-            {
-                output += " ";
-            }
-
-            output += "]";
-
-            Console.WriteLine(output);
-            return;
-        }
-
-        if (e.Message.Length > workableSpace)
-        {
-            string[] message = e.Message.Split(" ");
-            string line = "";
-            foreach (string word in message)
-            {
-                if (line.Length + word.Length > workableSpace)
+                string[] message = e.Message.Split(" ");
+                string line = "";
+                foreach (string word in message)
                 {
-                    Console.WriteLine(line);
-                    break;
+                    if (line.Length + word.Length > workableSpace)
+                    {
+                        Console.WriteLine(line);
+                        break;
+                    }
+
+                    line += word + " ";
                 }
-                line += word + " ";
             }
-        }
-        else
-        {
-            Console.WriteLine(e.Message);
+            else
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            Console.SetCursorPosition(_endCursorPosition[0], _endCursorPosition[1]);
         }
     }
 }

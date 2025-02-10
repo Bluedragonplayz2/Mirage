@@ -1,4 +1,7 @@
-﻿namespace Mir_Utilities;
+﻿using System.Net;
+using RestSharp;
+
+namespace Mir_Utilities;
 
 public class CommonApi
 {
@@ -34,7 +37,20 @@ public class CommonApi
         robotStatus.SessionId = status.session_id!;
         return robotStatus;
     }
-    
+    public static void VerifyRobotConnection(ApiCaller caller)
+    {
+        dynamic status = caller.GetTimedApi("status").Result;
+    }
+
+    public static void ChangeRobotState(ApiCaller caller, CommonApiSchema.RobotStatusState.State state)
+    {
+        dynamic status = new
+        {
+            state_id = state
+        };
+        dynamic r = caller.PutApi("status", status).Result;
+    }
+
     
     
     public static void AdjustRobotMapAndPosition(ApiCaller caller, String mapId, CommonApiSchema.RobotStatus.Position newPos)
@@ -49,7 +65,7 @@ public class CommonApi
                 orientation = newPos.Orientation
             }
         };
-        caller.PutApi("status", status);
+        dynamic r =  caller.PutApi("status", status).Result;
 
     }
 }

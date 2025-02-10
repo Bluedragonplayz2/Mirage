@@ -30,5 +30,14 @@ public class CommonApiSchema
         public string MapId;
         public string SessionId;
     }
-    
+    public struct RobotStatusState
+    {
+        public enum State
+        {
+            //Todo: Populate Other States
+            RESUME =3,
+            PAUSED =4,
+        }
+        public State RobotMissionQueueState;
+    }
 }

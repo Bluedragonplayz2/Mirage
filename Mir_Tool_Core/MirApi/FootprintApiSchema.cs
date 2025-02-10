@@ -4,17 +4,17 @@ public class FootprintApiSchema
 {
     public struct GetFootprintsSnapshot
     {
-        public String Guid;
-        public String Name;
-        public String ConfigId;
+        public string Guid;
+        public string Name;
+        public string ConfigId;
     }
     public struct GetFootprintByGuidSnapshot
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
         public float Height;
-        public String OwnerId;
-        public String ConfigId;
+        public string OwnerId;
+        public string ConfigId;
         public List<Coordinates> FootprintPoints;
 
         public struct Coordinates

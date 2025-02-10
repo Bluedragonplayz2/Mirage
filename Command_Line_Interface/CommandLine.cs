@@ -93,7 +93,7 @@ class CommandLine
                 }
             }
         }
-        Console.WriteLine("Press any key to continue....");
+        Console.WriteLine("Press ENTER to continue....");
         Console.ReadLine();
     }
 }
