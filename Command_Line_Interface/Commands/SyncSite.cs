@@ -138,7 +138,13 @@ public class SyncSite
                 }
             }
         }
-
+        foreach (var targetRobot in targetRobotsInformation.Select((value, i) => ( value, i )))
+        {
+            if (targetRobot.value == sourceRobotInformation)
+            {
+                targetRobotsInformation.RemoveAt(targetRobot.i);
+            }
+        }
 
         Mir_Utilities.SyncSite taskExec = new Mir_Utilities.SyncSite();
 

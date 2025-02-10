@@ -92,7 +92,24 @@ class CommandLine
                     break;
                 }
             }
+            
+            if (command.Contains("clearfootprint") || command.Contains("cf"))
+            {
+                //clearfootprint [options] <targets> 
+                try
+                {
+                    new ClearFootprint().CommandHandler(arguments, flags, options);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An Unexpected Error Occured While Executing ClearFootprint Command");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                    break;
+                }
+            }
         }
+        
         Console.WriteLine("Press ENTER to continue....");
         Console.ReadLine();
     }
