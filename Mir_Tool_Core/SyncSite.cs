@@ -46,6 +46,18 @@ public class SyncSite
             "Exported site data from source robot",
             source.Name
         ));
+        try
+        {
+            using (var fs = new FileStream($"/export/{DateTime.Now.ToString()}.SITE", FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(session, 0, session.Length);
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            logger.Error("failed to write session to file");
+        }
         //import site data
         List<Task> importingTasks = new List<Task>();
         foreach (RobotSchema.Robot target in targets)
