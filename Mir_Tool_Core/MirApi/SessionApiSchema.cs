@@ -4,15 +4,15 @@ public class SessionApiSchema
 {
     public struct GetSessionSnapshot
     {
-        public String Name;
-        public String Guid;
+        public string Name;
+        public string Guid;
     }
     public struct GetSessionByGuidSnapshot
     {
-        public String Name;
-        public String Guid;
-        public String CreatedById;
-        public String Description;
+        public string Name;
+        public string Guid;
+        public string CreatedById;
+        public string Description;
     }
 
     public struct GetActiveSessionImportSnapshot
@@ -21,6 +21,6 @@ public class SessionApiSchema
         public int Status;
         public int SessionsTotal;
         public int SessionsImported;
-        public String ErrorMessage;
+        public string ErrorMessage;
     }
 }

@@ -6,19 +6,19 @@ public class SoundApiSchema
 {
     public struct GetSoundByGuidSnapshot
     {
-        public String Name;
-        public String Guid;
-        public String Sound;
+        public string Name;
+        public string Guid;
+        public string Sound;
         public TimeSpan Length;
-        public String Note;
+        public string Note;
         public int Volume;
-        public String OwnerId;
+        public string OwnerId;
 
     }
 
     public struct GetSoundsSnapshot
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
     }
 }

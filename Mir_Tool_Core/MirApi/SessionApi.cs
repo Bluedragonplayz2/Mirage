@@ -53,24 +53,32 @@ public class SessionApi
           dynamic response = await caller.PutApi($"sessions/{guid}", session);
           return response.guid!;
      }
-     public static void DeleteSession(ApiCaller caller, String guid)
+     public static async Task<string> DeleteSession(ApiCaller caller, String guid)
      { 
-          caller.DeleteApi($"sessions/{guid}");
+          await caller.DeleteApi($"sessions/{guid}");
+          return guid;
      }
      
      public static async Task<byte[]> SessionExport(ApiCaller caller, String guid)
      {
           //Todo: Make sure this works
-          dynamic response = await caller.GetApi($"sessions/{guid}/export");
-          byte[] sessionInByte = response.RawBytes;
-          return sessionInByte;
+          
+          dynamic response = await caller.GetRawApi($"sessions/{guid}/export");
+
+          return response;
      }
 
-     public static void SessionImport(ApiCaller caller, byte[] file)
+     public static async Task<SessionApiSchema.GetActiveSessionImportSnapshot>  SessionImport(ApiCaller caller, byte[] file)
      {
           //Todo: Make sure this works
-          dynamic session = new { file };
-          caller.PostApi("sessions/import", session);
+          
+          dynamic response = await caller.PostFileApi("sessions/import", "file",file, "newSite.site");
+          SessionApiSchema.GetActiveSessionImportSnapshot snapshot = new SessionApiSchema.GetActiveSessionImportSnapshot();
+          snapshot.Status = response.status!;
+          snapshot.SessionsTotal = response.sessions_total!;
+          snapshot.SessionsImported = response.sessions_imported!;
+          snapshot.ErrorMessage = response.error_message!;
+          return snapshot;
      }
      public static async Task<SessionApiSchema.GetActiveSessionImportSnapshot> GetActiveSessionImportSnapshot(ApiCaller caller)
      {

@@ -1,12 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 
+using System.Security.Policy;
 using Console_Input.Commands;
+using log4net.Config;
 
 class CommandLine
 {
     static void Main(string[] args)
     {
+        XmlConfigurator.ConfigureAndWatch(new FileInfo("log4net.config"));
+
         while (true)
         {
             string? input = Console.ReadLine().Trim();
@@ -70,26 +74,82 @@ class CommandLine
                 }
 
             }
-            
+
+
+            Action? commandHandler = command switch
+            {
+                "synsite" or "ss" => () => new SyncSite().CommandHandler(arguments, flags, options),
+                "clearfootprint" or "cf" => () => new ClearFootprint().CommandHandler(arguments, flags, options),
+                "diagnose" => () => new RobotDiagnostic().CommandHandler(arguments, flags, options),
+                _ => null
+
+            };
+            try
+            {
+                if (commandHandler != null)
+                {
+                    commandHandler.Invoke();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"An Unexpected Error Occured While Executing [{command}] Command");
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
+                break;
+            }
 
             
             
-            if (command.Contains("syncsite") || command.Contains("ss"))
+            /*if (command.Contains("syncsite") || command.Contains("ss"))
             {
                 //syncsite [options]  <source> <targets> <site name>
                 try
                 {
-                    SyncSite.CommandHandler(arguments, flags, options);
+                    new SyncSite().CommandHandler(arguments, flags, options);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("An Unexpected Error Occured While Executing SyncSite Command");
+                    Console.WriteLine(e.Message);
                     Console.WriteLine(e.StackTrace);
                     break;
                 }
             }
+            
+            if (command.Contains("clearfootprint") || command.Contains("cf"))
+            {
+                //clearfootprint [options] <targets> 
+                try
+                {
+                    new ClearFootprint().CommandHandler(arguments, flags, options);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An Unexpected Error Occured While Executing ClearFootprint Command");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                    break;
+                }
+            }
+            if (command.Contains("diagnose"))
+            {
+                //diagnose [options] <targets> 
+                try
+                {
+                    new RobotDiagnostic().CommandHandler(arguments, flags, options);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("An Unexpected Error Occured While Executing ClearFootprint Command");
+                    Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);
+                    break;
+                }
+            }*/
         }
-        Console.WriteLine("Press any key to continue....");
+        
+        Console.WriteLine("Press ENTER to continue....");
         Console.ReadLine();
     }
 }
