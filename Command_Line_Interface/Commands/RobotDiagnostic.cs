@@ -94,8 +94,9 @@ public class RobotDiagnostic
             catch (Exception e)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"Failed to clear footprint from {robot.Name}");
+                Console.WriteLine($"Failed to get robot health from {robot.Name}");
                 Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
                 _endCursorPosition = [Console.GetCursorPosition().Left, Console.GetCursorPosition().Top];
                 Console.ResetColor();
             }
