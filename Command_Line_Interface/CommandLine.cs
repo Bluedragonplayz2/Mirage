@@ -80,7 +80,6 @@ class CommandLine
             {
                 "synsite" or "ss" => () => new SyncSite().CommandHandler(arguments, flags, options),
                 "clearfootprint" or "cf" => () => new ClearFootprint().CommandHandler(arguments, flags, options),
-                "diagnose" => () => new RobotDiagnostic().CommandHandler(arguments, flags, options),
                 _ => null
 
             };
