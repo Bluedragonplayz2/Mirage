@@ -8,7 +8,7 @@ public class YamlConfig
 {
     private static readonly log4net.ILog logger = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     
-    public static T? GetConfigFromFile<T>(string filePath) where T : class
+    public static T? GetConfigFromFile<T>(string filePath) where T: class
     {
         if (File.Exists(filePath))
         {
@@ -22,6 +22,7 @@ public class YamlConfig
             catch (YamlException yamlEx)
             {
                 logger.Error($"Failed to deserialize yaml file: {filePath}, error: {yamlEx.Message}");
+                logger.Debug($"Failed to deserialize yaml file: {filePath}, error: {yamlEx.StackTrace}");
                 return null;
             }
         }
@@ -30,7 +31,9 @@ public class YamlConfig
     }
 
     private static string ReadFile(string path)
-    {
+    { 
+
+        
         string readContents;
         using (StreamReader streamReader = new StreamReader(path, Encoding.UTF8))
         {

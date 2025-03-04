@@ -10,22 +10,24 @@ public class RobotSchema
         public string Name { get; set; }
         public string Ip { get; set; }
         public string Port { get; set; }
+        private string _username;
+        private string _password;
         public string Username
         {
-            get=>Username;
+            get=>_username;
             set
             {
-                Username = value;
+                _username = value;
                 
             }
         }
 
         public string Password
         {
-            get=>Password;
+            get=>_password;
             set
             {
-                Password = value;
+                _password = value;
                 
             }
         }

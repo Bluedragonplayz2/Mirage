@@ -4,15 +4,15 @@ public class ZoneApiSchema
 {
     public struct GetZonesByMapSnapshot
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
         public int TypeId;
     }
     public struct GetZoneByGuidSnaphot
     {
-        public String Guid;
-        public String Name;
-        public String ShapeType;
+        public string Guid;
+        public string Name;
+        public string ShapeType;
         public int TypeId;
         public float StrokeWidth;
         public float Direction;

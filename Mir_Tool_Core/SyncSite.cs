@@ -46,18 +46,64 @@ public class SyncSite
             "Exported site data from source robot",
             source.Name
         ));
+        try
+        {
+            using (var fs = new FileStream($"/export/{DateTime.Now.ToString()}.SITE", FileMode.Create, FileAccess.Write))
+            {
+                fs.Write(session, 0, session.Length);
+            }
+        }
+        catch (Exception ex)
+        {
+            
+            logger.Error("failed to write session to file");
+        }
         //import site data
+        List<Task> importingTasks = new List<Task>();
         foreach (RobotSchema.Robot target in targets)
         {
-            Task task = Task.Run(() =>
-            {
-                importSite(target, session);
-            });
+            if (!(target == source))
+            { 
+                Task task = Task.Run(() =>
+                {
+                    importSite(target, session);
+                });
+                importingTasks.Add(task);
+            }
+            
         }
+        Task.WaitAll(importingTasks.ToArray());
+        
+        
 
         void importSite(RobotSchema.Robot target, byte[] session)
         {
+
+            OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                StatusObject.TaskInterimEvent.EventLevel.INFO,
+                $"Starting site import on {target.Name}",
+                target.Name
+            ));
             ApiCaller targetApi = new ApiCaller(target.Ip, target.AuthId);
+            try
+            {
+                CommonApi.VerifyRobotConnection(targetApi);
+            }
+            catch (Exception e)
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"unable to reach {target.Name}",
+                    target.Name
+                ));
+                taskCompleteReport.PartialFailure(
+                        target.Name,
+                    $"unable to reach {target.Name}",
+                    e,
+                    new StackTrace()
+                );
+                return;
+            }
             List<SessionApiSchema.GetSessionSnapshot>? sessionsSnapshot = SessionApi.GetSessionSnapshot(targetApi).Result;
             CommonApiSchema.RobotStatus status = new CommonApiSchema.RobotStatus();
             if (sessionsSnapshot != null)
@@ -74,30 +120,151 @@ public class SyncSite
                     nullPos.PosX = 0;
                     nullPos.PosY = 0;
                     nullPos.Orientation = 0;
+                    try
+                    {
+                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.PAUSED);
+                        Thread.Sleep(100);
+                        CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000", nullPos);
+                        Thread.Sleep(100);
+                        MissionQueueApi.ClearMissionQueue(targetApi);
+                        Thread.Sleep(100);
+                        String s = SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid).Result;
+                        Thread.Sleep(100);
+                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.RESUME);
+                        Thread.Sleep(100);
+                    }
+                    catch (Exception e)
+                    {
+                        OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                            StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                            $"Unable to place {target.Name} into configure site",
+                            target.Name
+                        )); 
+                        taskCompleteReport.PartialFailure(
+                            target.Name,
+                            $"Unable to start import site data to {target.Name}",
+                            e,
+                            new StackTrace()
+                        );
+                        return;
+                    }
 
-                    CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000",nullPos);
-                    SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid);
-                    //Todo: update this to the new robot object
-                    MirRobotApi.MiRRobot legacyRobot = new MirRobotApi.MiRRobot(target.Ip, target.AuthId);
-                    ClearFootprint.ClearFootprintFromRobot(legacyRobot);
-                    Thread.Sleep(5000);
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Deleted existing site {target.Name}",
+                        target.Name
+                    ));
+                    
                 }
             }
-
-
-            
-            SessionApi.SessionImport(targetApi, session);
-            
-            
-            
-            /*
-            if (status.Equals(new CommonApiSchema.RobotStatus()))
+            logger.Info(session.ToString());
+            SessionApiSchema.GetActiveSessionImportSnapshot sessionImport = new SessionApiSchema.GetActiveSessionImportSnapshot();
+            try
             {
-                CommonApi.AdjustRobotMapAndPosition(targetApi, status.MapId,status.RobotPosition);
-            }*/
+                if ((session == null) || (session.ToString() == null) || (session.ToString() == ""))
+                {
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                        $"Unable to start import site data to {target.Name}",
+                        target.Name
+                    )); 
+                    taskCompleteReport.PartialFailure(
+                        target.Name,
+                        $"Unable to start import site data to {target.Name}",
+                        new Exception("Session is null"),
+                        new StackTrace()
+                    );
+                    return;
+                }
+
+                sessionImport =  SessionApi.SessionImport(targetApi, session).Result;
+
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.INFO,
+                    $"Importing:0",
+                    target.Name
+                ));
+                Thread.Sleep(1000);
+            }
+            catch (Exception e)
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"Unable to start import site data to {target.Name}",
+                    target.Name
+                )); 
+                taskCompleteReport.PartialFailure(
+                    target.Name,
+                    $"Unable to start import site data to {target.Name}",
+                    e,
+                    new StackTrace()
+                );
+                return;
+            }
+
+            try
+            {
+                while (sessionImport.Status == 1)
+                {
+                    sessionImport = SessionApi.GetActiveSessionImportSnapshot(targetApi).Result;
+                    if (sessionImport.SessionsTotal == 0)
+                    {
+                        sessionImport.SessionsTotal = 1;
+                        sessionImport.SessionsImported = 1;
+                    }
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Importing:{(sessionImport.SessionsImported * 100 )/sessionImport.SessionsTotal}",
+                        target.Name
+                    ));
+                    Thread.Sleep(1000);
+                }
+
+                if (sessionImport.Status == 2)
+                {
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                        sessionImport.ErrorMessage,
+                        target.Name
+                    )); 
+                    taskCompleteReport.PartialFailure(
+                        target.Name,
+                        sessionImport.ErrorMessage,
+                        new Exception("Failed to import site"),
+                        new StackTrace()
+                    );
+                }
+                else
+                {
+                    OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                        StatusObject.TaskInterimEvent.EventLevel.INFO,
+                        $"Imported site data to {target.Name}",
+                        target.Name
+                    ));
+                    if (!status.Equals(new CommonApiSchema.RobotStatus()))
+                    {
+                        CommonApi.AdjustRobotMapAndPosition(targetApi, status.MapId,status.RobotPosition);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                    StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                    $"Unable to get import status from {target.Name}",
+                    target.Name
+                )); 
+                taskCompleteReport.PartialFailure(
+                    target.Name,
+                    $"Unable to get import status from {target.Name}",
+                    e,
+                    new StackTrace()
+                );
+            }
+
             
         }
-
         return taskCompleteReport;
     }
 

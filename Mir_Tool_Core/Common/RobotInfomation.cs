@@ -16,7 +16,7 @@ credentials:
 */
     
     
-    private class RobotConfigSchema
+    public class RobotConfigSchema
     {
         
         public class RobotDetails
@@ -32,32 +32,29 @@ credentials:
             public string password;
         }
 
-        public List<Dictionary<string, Dictionary<string, RobotDetails>>> robot = new List<Dictionary<string, Dictionary<string, RobotDetails>>>();
+        public Dictionary<string, Dictionary<string, RobotDetails>> robot =
+            new Dictionary<string, Dictionary<string, RobotDetails>>();
         public Dictionary<string, Credential> credentials = new Dictionary<string, Credential>();
         
     }
-    private static readonly string _robotConfigPath = "./config/robotConfig.yaml";
+    private static readonly string _robotConfigPath = "config/robotConfig.yaml";
     public static List<RobotSchema.Robot>? GetRobotsFromFleet(string fleetName)
     {
         RobotConfigSchema? robotConfig = YamlConfig.GetConfigFromFile<RobotConfigSchema>(_robotConfigPath);
         if (robotConfig == null)
         {
-            return null;
+            throw new FileNotFoundException();
         }
         List<RobotSchema.Robot> fleetRobots = new List<RobotSchema.Robot>();
-        foreach (var fleet in robotConfig.robot)
+        if (robotConfig.robot.TryGetValue(fleetName, out var fleet))
         {
-           
-            if (fleet.TryGetValue(fleetName, out var robotDetails))
+            foreach (var robotDetails in fleet)
             {
-                foreach (var robot in robotDetails)
-                {
-
-                    if (robotConfig.credentials.TryGetValue(robot.Value.credential, out var credential))
+                    if (robotConfig.credentials.TryGetValue(robotDetails.Value.credential, out var credential))
                     {
-                        fleetRobots.Add(new RobotSchema.Robot(robot.Key, robot.Value.ip, robot.Value.port, credential.username, credential.password));
+                        fleetRobots.Add(new RobotSchema.Robot(robotDetails.Key, robotDetails.Value.ip, robotDetails.Value.port, credential.username, credential.password));
                     }
-                }
+                
             }
         }
 
@@ -75,17 +72,16 @@ credentials:
             return null;
         }
         List<RobotSchema.Robot> allRobots = new List<RobotSchema.Robot>();
-        foreach (var fleet in robotConfig.robot)
+        foreach (var fleet in robotConfig.robot.Values)
         {
-            foreach (var robotDetails in fleet.Values)
+            foreach (var robot in fleet)
             {
-                foreach (var robot in robotDetails)
-                {
+
                     if (robotConfig.credentials.TryGetValue(robot.Value.credential, out var credential))
                     {
                         allRobots.Add(new RobotSchema.Robot(robot.Key, robot.Value.ip, robot.Value.port, credential.username, credential.password));
                     }
-                }
+                
             }
         }
         if (allRobots.Count == 0)
@@ -103,26 +99,13 @@ credentials:
         {
             return null;
         }
-        foreach (var fleetDict in robotConfig.robot)
+        if (robotConfig.robot.TryGetValue(fleetName, out var fleet))
         {
-            // Check if the fleet dictionary contains the specified fleet name
-            if (fleetDict.TryGetValue(fleetName, out var robotDetails))
+            if (fleet.TryGetValue(name, out var robotDetails))
             {
-                // Check if the robot dictionary contains the specified robot name
-                if (robotDetails.TryGetValue(name, out var robot))
+                if (robotConfig.credentials.TryGetValue(robotDetails.credential, out var credential))
                 {
-                    // Retrieve the credentials for the robot
-                    if (robotConfig.credentials.TryGetValue(robot.credential, out var credential))
-                    {
-                        // Return the found robot with its details
-                        return new RobotSchema.Robot(
-                            name,
-                            robot.ip,
-                            robot.port,
-                            credential.username,
-                            credential.password
-                        );
-                    }
+                    return new RobotSchema.Robot(name, robotDetails.ip, robotDetails.port, credential.username, credential.password);
                 }
             }
         }

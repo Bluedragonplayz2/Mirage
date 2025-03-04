@@ -4,14 +4,14 @@ public class PositionApiSchema
 {
     public struct GetPositionsByMapSnapshot
     {
-        public String Guid;
-        public String Name;
+        public string Guid;
+        public string Name;
         public int TypeId;
     }
     public struct GetPositionByGuidSnapshot
     {
-        public String Name;
-        public String Guid;
+        public string Name;
+        public string Guid;
         public float PosX;
         public float PosY;
         public float Orientation;
@@ -20,9 +20,9 @@ public class PositionApiSchema
     }
     public struct GetPositionByPathGuideSnapshot
     {
-        public String Guid;
-        public String PositionsGuid;
+        public string Guid;
+        public string PositionsGuid;
         public int Priority;
-        public String PositionType;
+        public string PositionType;
     }
 }

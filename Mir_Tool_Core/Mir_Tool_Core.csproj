@@ -12,7 +12,10 @@
       <PackageReference Include="log4net" Version="3.0.3" />
       <PackageReference Include="RestSharp" Version="112.1.0" />
       <PackageReference Include="RestSharp.Serializers.NewtonsoftJson" Version="112.1.0" />
-      <PackageReference Include="YamlDotNet" Version="16.2.1" />
+      <PackageReference Include="Siemens.RosSharp.MessageGeneration" Version="2.1.0" />
+      <PackageReference Include="Siemens.RosSharp.RosBridgeClient.ROS2" Version="2.1.0" />
+      <PackageReference Include="Siemens.RosSharp.Urdf" Version="2.1.0" />
+      <PackageReference Include="YamlDotNet" Version="16.3.0" />
     </ItemGroup>
 
 </Project>
