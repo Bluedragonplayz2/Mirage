@@ -22,6 +22,10 @@ public class FootprintApi
         }
         return footprintListSnapshot;
     }
+    
+    
+    
+    
     public static  async Task<FootprintApiSchema.GetFootprintByGuidSnapshot> GetFootprintByGuid(ApiCaller caller, String guid)
     {
         dynamic footprintApi = await caller.GetApi($"footprints/{guid}");
@@ -42,6 +46,9 @@ public class FootprintApi
         }
         return footprintSnapshot;
     }
+    
+    
+    
     public static async Task<String> PostFootprint(ApiCaller caller, String guid, String name, String configId,float height, List<FootprintApiSchema.GetFootprintByGuidSnapshot.Coordinates> footprintPoints)
     {
         dynamic footprint = new
