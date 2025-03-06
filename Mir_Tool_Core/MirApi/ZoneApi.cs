@@ -1,6 +1,6 @@
 ﻿using Mir_Utilities.Common;
 
-namespace Mir_Utilities;
+namespace Mir_Utilities.MirApi;
 
 public class ZoneApi
 {

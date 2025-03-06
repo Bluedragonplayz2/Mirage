@@ -1,5 +1,4 @@
-﻿namespace Mir_Utilities;
-
+﻿namespace Mir_Utilities.MirApi;
 public class FootprintApi
 {
     public static async Task<List<FootprintApiSchema.GetFootprintsSnapshot>?> GetFootprints(ApiCaller caller)

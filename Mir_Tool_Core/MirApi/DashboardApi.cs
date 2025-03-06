@@ -1,5 +1,4 @@
-﻿namespace Mir_Utilities;
-
+﻿namespace Mir_Utilities.MirApi;
 public class DashboardApi
 {
     public static async Task<List<DashboardApiSchema.GetDashboardSnapshot>?> GetDashboards(ApiCaller caller)

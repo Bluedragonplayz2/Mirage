@@ -1,10 +1,9 @@
-using System.Globalization;
+namespace Mir_Utilities.MirApi;
+
 using System.Net;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
-
-namespace Mir_Utilities;
 
 public class ApiCaller
 {

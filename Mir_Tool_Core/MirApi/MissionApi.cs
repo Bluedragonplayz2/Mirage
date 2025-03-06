@@ -1,5 +1,4 @@
-﻿namespace Mir_Utilities;
-
+﻿namespace Mir_Utilities.MirApi;
 public class MissionApi
 {
     public static async Task<List<MissionApiSchma.GetMissionSnapshot>?> GetMissions(ApiCaller caller)
