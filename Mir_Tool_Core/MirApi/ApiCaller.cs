@@ -1,3 +1,5 @@
+using Mir_Utilities.Common;
+
 namespace Mir_Utilities.MirApi;
 
 using System.Net;
@@ -11,6 +13,9 @@ public class ApiCaller
     //Default value of Mir Robots
     private const String _protocol = "http";
     private const String _apiVersion = "v2.0.0";
+    
+    private static readonly log4net.ILog LOGGER = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     
     private bool _BatchMode = false;
     private List<TaskCompletionSource<RestResponse>> _individualCompletionSources = new List<TaskCompletionSource<RestResponse>>();
@@ -31,7 +36,15 @@ public class ApiCaller
         _client.AddDefaultHeaders(headers);
         _authId = authId;
         //Generating First Token
-        GetMirToken();
+        try
+        {
+            GetMirToken();
+        }
+        catch (Exception ex)
+        {
+            LOGGER.Error("Failed to generate token for the first time", ex);
+        }
+
     }
     private readonly RestClient _client;
     private DateTime _tokenExpiry = DateTime.Now;

@@ -1,4 +1,7 @@
-﻿namespace Mir_Utilities.MirApi;
+﻿using System.Net;
+using RestSharp;
+
+namespace Mir_Utilities.MirApi;
 
 public class SoundApi
 {
@@ -63,7 +66,11 @@ public class SoundApi
     }
     public static void DeleteSound(ApiCaller caller, String guid)
     {
-        caller.DeleteApi($"sounds/{guid}");
+        RestResponse response = caller.DeleteApi($"sounds/{guid}").Result;
+        if (response.StatusCode != HttpStatusCode.NoContent)
+        {
+            throw new Exception("Failed to delete sound");
+        }
     }
     
     

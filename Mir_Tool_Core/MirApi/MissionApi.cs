@@ -59,7 +59,7 @@ public class MissionApi
             description,
             session_id = sessionId,
             group_id = groupId,
-            hidden,
+            hidden
         };
         dynamic response = await caller.PutApi($"missions/{guid}", mission);
         return response.guid!;

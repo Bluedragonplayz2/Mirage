@@ -13,7 +13,10 @@ public class SyncSite
     {
         StatusObject.TaskCompleteReport taskCompleteReport = new StatusObject.TaskCompleteReport(StatusObject.TaskCompleteReport.TaskStatus.COMPLETED);
         //export site data
+        
         ApiCaller sourceApi = new ApiCaller(source.Ip, source.AuthId);
+        
+
         List<SessionApiSchema.GetSessionSnapshot>? sessionsSnapshot = SessionApi.GetSessionSnapshot(sourceApi).Result;
         if (sessionsSnapshot == null)
         {
