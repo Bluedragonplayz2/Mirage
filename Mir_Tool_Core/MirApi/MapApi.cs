@@ -1,4 +1,4 @@
-﻿namespace Mir_Utilities.MirApi;
+﻿namespace Mir_Utilities.MirApi; 
 public class MapApi
 {
     public static async Task<List<MapApiSchema.GetMapSnapshot>?> GetMap(ApiCaller caller)

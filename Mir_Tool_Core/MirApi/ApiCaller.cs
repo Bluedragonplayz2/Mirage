@@ -7,6 +7,16 @@ using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 
+public interface IApiCaller
+{
+    void CreateMiRToken();
+    void GetApi(string url);
+    void PostApi();
+    void PutApi();
+    void DeleteApi();
+    
+}
+
 public class ApiCaller
 {
 
@@ -38,7 +48,7 @@ public class ApiCaller
         //Generating First Token
         try
         {
-            GetMirToken();
+            CreateMiRToken();
         }
         catch (Exception ex)
         {
@@ -66,13 +76,13 @@ public class ApiCaller
         if(DateTime.Compare(_tokenExpiry, DateTime.Now) < 0)
         {
             //if not get a new token
-            GetMirToken();
+            CreateMiRToken();
         }
         request.AddHeader("mir-auth-token", _authToken);
         return await  _client.ExecuteAsync(request);
     }
 
-    private void GetMirToken()
+    public void CreateMiRToken()
     {
         var request = new RestRequest("users/auth", Method.Post);
         request.AddHeader("Authorization", _authId);
