@@ -1,0 +1,25 @@
+﻿{
+  "id": 2406,
+  "name": "X-offset for Reverse docking to shelves and Bar-markers",
+  "full_name": "/move_base_node/bar_offsets_back/x",
+  "description": "Enter the X-offset in meters for reverse docking to shelves. A positive value moves the robot further backward when it docks.",
+  "value": "0.0",
+  "default": "0.0",
+  "type": "double",
+  "parent_name": "",
+  "parent_id": null,
+  "parent_value": null,
+  "settings_group_id": 14,
+  "settings_group": "/v2.0.0/setting_groups/14",
+  "fieldtype": "text",
+  "constraints": {
+    "min": "-0.05",
+    "max": "0.05"
+  },
+  "editable": "1",
+  "children_ids": [],
+  "allowed_methods": [
+    "PUT",
+    "GET"
+  ]
+}

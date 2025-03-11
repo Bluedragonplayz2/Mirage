@@ -1,6 +1,6 @@
 ﻿using System.Buffers.Text;
 
-namespace Mir_Utilities;
+namespace Mir_Utilities.MirApi;
 
 public class SoundApiSchema
 {

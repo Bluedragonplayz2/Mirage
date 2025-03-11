@@ -1,0 +1,978 @@
+﻿[
+  {
+    "id": 1407,
+    "url": "/v2.0.0/settings/1407",
+    "name": "Serial port",
+    "value": "/dev/ttyUSB",
+    "default": "/dev/ttyUSB",
+    "parent_name": ""
+  },
+  {
+    "id": 1408,
+    "url": "/v2.0.0/settings/1408",
+    "name": "Baud rate",
+    "value": "19200",
+    "default": "19200",
+    "parent_name": ""
+  },
+  {
+    "id": 1409,
+    "url": "/v2.0.0/settings/1409",
+    "name": "Data bits",
+    "value": "8",
+    "default": "8",
+    "parent_name": ""
+  },
+  {
+    "id": 1410,
+    "url": "/v2.0.0/settings/1410",
+    "name": "Stop bits",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 1411,
+    "url": "/v2.0.0/settings/1411",
+    "name": "Parity",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 1421,
+    "url": "/v2.0.0/settings/1421",
+    "name": "Ignore hardware errors",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1422,
+    "url": "/v2.0.0/settings/1422",
+    "name": "Hardware error timeout",
+    "value": "10",
+    "default": "10",
+    "parent_name": ""
+  },
+  {
+    "id": 1668,
+    "url": "/v2.0.0/settings/1668",
+    "name": "Response delay",
+    "value": "10000",
+    "default": "10000",
+    "parent_name": ""
+  },
+  {
+    "id": 1674,
+    "url": "/v2.0.0/settings/1674",
+    "name": "Protective stop timeout",
+    "value": "-1",
+    "default": "-1",
+    "parent_name": ""
+  },
+  {
+    "id": 1677,
+    "url": "/v2.0.0/settings/1677",
+    "name": "Jump detection threshold (linear movement)",
+    "value": "0.2",
+    "default": "0.2",
+    "parent_name": ""
+  },
+  {
+    "id": 1678,
+    "url": "/v2.0.0/settings/1678",
+    "name": "Jump detection threshold (angular movement)",
+    "value": "15.0",
+    "default": "15.0",
+    "parent_name": ""
+  },
+  {
+    "id": 1708,
+    "url": "/v2.0.0/settings/1708",
+    "name": "Universal Robot IP address",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1769,
+    "url": "/v2.0.0/settings/1769",
+    "name": "Maximum distance from path",
+    "value": "10",
+    "default": "-1",
+    "parent_name": ""
+  },
+  {
+    "id": 1770,
+    "url": "/v2.0.0/settings/1770",
+    "name": "Maximum distance from path with a cart",
+    "value": "-1",
+    "default": "-1",
+    "parent_name": ""
+  },
+  {
+    "id": 1847,
+    "url": "/v2.0.0/settings/1847",
+    "name": "Minimum charge current",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 1893,
+    "url": "/v2.0.0/settings/1893",
+    "name": "Shelf",
+    "value": "true",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1898,
+    "url": "/v2.0.0/settings/1898",
+    "name": "Email address",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 1902,
+    "url": "/v2.0.0/settings/1902",
+    "name": "PLC registers",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 1907,
+    "url": "/v2.0.0/settings/1907",
+    "name": "Universal Robots Interface",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1909,
+    "url": "/v2.0.0/settings/1909",
+    "name": "Elevators",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1955,
+    "url": "/v2.0.0/settings/1955",
+    "name": "External adapter serial number",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1982,
+    "url": "/v2.0.0/settings/1982",
+    "name": "Sender email",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1983,
+    "url": "/v2.0.0/settings/1983",
+    "name": "Sender name",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1984,
+    "url": "/v2.0.0/settings/1984",
+    "name": "Username",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1985,
+    "url": "/v2.0.0/settings/1985",
+    "name": "Password",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1986,
+    "url": "/v2.0.0/settings/1986",
+    "name": "SMTP server",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 1987,
+    "url": "/v2.0.0/settings/1987",
+    "name": "Port",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 1988,
+    "url": "/v2.0.0/settings/1988",
+    "name": "Encryption type",
+    "value": "NONE",
+    "default": "NONE",
+    "parent_name": ""
+  },
+  {
+    "id": 1989,
+    "url": "/v2.0.0/settings/1989",
+    "name": "Authentication required",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 1997,
+    "url": "/v2.0.0/settings/1997",
+    "name": "Modbus",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2000,
+    "url": "/v2.0.0/settings/2000",
+    "name": "Name",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2001,
+    "url": "/v2.0.0/settings/2001",
+    "name": "Address",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2002,
+    "url": "/v2.0.0/settings/2002",
+    "name": "City",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2003,
+    "url": "/v2.0.0/settings/2003",
+    "name": "Zip code",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2004,
+    "url": "/v2.0.0/settings/2004",
+    "name": "Country",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2005,
+    "url": "/v2.0.0/settings/2005",
+    "name": "Phone number",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2006,
+    "url": "/v2.0.0/settings/2006",
+    "name": "Support phone number",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2007,
+    "url": "/v2.0.0/settings/2007",
+    "name": "Email",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2008,
+    "url": "/v2.0.0/settings/2008",
+    "name": "Website",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2009,
+    "url": "/v2.0.0/settings/2009",
+    "name": "Maximum planning time",
+    "value": "30",
+    "default": "60",
+    "parent_name": ""
+  },
+  {
+    "id": 2063,
+    "url": "/v2.0.0/settings/2063",
+    "name": "3D camera model",
+    "value": "intel_d435",
+    "default": "intel_d435",
+    "parent_name": ""
+  },
+  {
+    "id": 2064,
+    "url": "/v2.0.0/settings/2064",
+    "name": "Left camera serial number",
+    "value": "349522074577",
+    "default": "1234567890",
+    "parent_name": "/cameras/type"
+  },
+  {
+    "id": 2065,
+    "url": "/v2.0.0/settings/2065",
+    "name": "Right camera serial number",
+    "value": "349522074485",
+    "default": "1234567890",
+    "parent_name": "/cameras/type"
+  },
+  {
+    "id": 2069,
+    "url": "/v2.0.0/settings/2069",
+    "name": "Waiting for obstacle",
+    "value": "8",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2070,
+    "url": "/v2.0.0/settings/2070",
+    "name": "Maximum path deviation",
+    "value": "0.5",
+    "default": "5.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2072,
+    "url": "/v2.0.0/settings/2072",
+    "name": "Indicator light",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2073,
+    "url": "/v2.0.0/settings/2073",
+    "name": "Right camera filter configuration",
+    "value": "top_default",
+    "default": "top_default",
+    "parent_name": "/cameras/type"
+  },
+  {
+    "id": 2074,
+    "url": "/v2.0.0/settings/2074",
+    "name": "Left camera filter configuration",
+    "value": "top_default",
+    "default": "top_default",
+    "parent_name": "/cameras/type"
+  },
+  {
+    "id": 2094,
+    "url": "/v2.0.0/settings/2094",
+    "name": "I/O modules",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2095,
+    "url": "/v2.0.0/settings/2095",
+    "name": "Undock from markers",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2137,
+    "url": "/v2.0.0/settings/2137",
+    "name": "Mute protective fields",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2138,
+    "url": "/v2.0.0/settings/2138",
+    "name": "Muted Protective fields sound",
+    "value": "",
+    "default": "",
+    "parent_name": "/features/reduce_zones"
+  },
+  {
+    "id": 2139,
+    "url": "/v2.0.0/settings/2139",
+    "name": "Muted Protective fields volume",
+    "value": "50",
+    "default": "50",
+    "parent_name": "/features/reduce_zones"
+  },
+  {
+    "id": 2178,
+    "url": "/v2.0.0/settings/2178",
+    "name": "Default robot footprint",
+    "value": "mirconst-guid-0000-0001-footprint012",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2184,
+    "url": "/v2.0.0/settings/2184",
+    "name": "Relative move target when docking to markers.",
+    "value": "0.5",
+    "default": "0.5",
+    "parent_name": ""
+  },
+  {
+    "id": 2185,
+    "url": "/v2.0.0/settings/2185",
+    "name": "Relative move target when docking to shelves.",
+    "value": "1.0",
+    "default": "1.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2186,
+    "url": "/v2.0.0/settings/2186",
+    "name": "Orientation P-gain",
+    "value": "5",
+    "default": "5",
+    "parent_name": "/move_base_node/use_mpc"
+  },
+  {
+    "id": 2187,
+    "url": "/v2.0.0/settings/2187",
+    "name": "Orientation D-gain",
+    "value": "3",
+    "default": "3",
+    "parent_name": "/move_base_node/use_mpc"
+  },
+  {
+    "id": 2188,
+    "url": "/v2.0.0/settings/2188",
+    "name": "Orientation I-gain",
+    "value": "0",
+    "default": "0",
+    "parent_name": "/move_base_node/use_mpc"
+  },
+  {
+    "id": 2191,
+    "url": "/v2.0.0/settings/2191",
+    "name": "Footprint for collision checks when docking",
+    "value": "[[0.4,-0.28],[0.4,0.28],[-0.4,0.28],[-0.4,-0.28]]",
+    "default": "[[0.4,-0.28],[0.4,0.28],[-0.4,0.28],[-0.4,-0.28]]",
+    "parent_name": ""
+  },
+  {
+    "id": 2193,
+    "url": "/v2.0.0/settings/2193",
+    "name": "Docked at marker reverse distance",
+    "value": "0.6",
+    "default": "0.6",
+    "parent_name": ""
+  },
+  {
+    "id": 2195,
+    "url": "/v2.0.0/settings/2195",
+    "name": "Maximum allowed speed",
+    "value": "1.2",
+    "default": "2.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2196,
+    "url": "/v2.0.0/settings/2196",
+    "name": "Desired speed",
+    "value": "1.2",
+    "default": "1.5",
+    "parent_name": ""
+  },
+  {
+    "id": 2197,
+    "url": "/v2.0.0/settings/2197",
+    "name": "X-offset for Forward docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2198,
+    "url": "/v2.0.0/settings/2198",
+    "name": "Y-offset for Forward docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2199,
+    "url": "/v2.0.0/settings/2199",
+    "name": "Orientation offset for Forward docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2200,
+    "url": "/v2.0.0/settings/2200",
+    "name": "Global X-offset for Forward docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2201,
+    "url": "/v2.0.0/settings/2201",
+    "name": "Global Y-offset for Forward docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2202,
+    "url": "/v2.0.0/settings/2202",
+    "name": "Global orientation offset for Forward docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2203,
+    "url": "/v2.0.0/settings/2203",
+    "name": "Global X-offset for docking to charging stations",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2204,
+    "url": "/v2.0.0/settings/2204",
+    "name": "Global Y-offset for docking to charging stations",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2205,
+    "url": "/v2.0.0/settings/2205",
+    "name": "Global orientation offset for docking to charging stations",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2210,
+    "url": "/v2.0.0/settings/2210",
+    "name": "Hook top module",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2212,
+    "url": "/v2.0.0/settings/2212",
+    "name": "Cart reverse speed",
+    "value": "0.12",
+    "default": "0.12",
+    "parent_name": ""
+  },
+  {
+    "id": 2275,
+    "url": "/v2.0.0/settings/2275",
+    "name": "Cart attached",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2276,
+    "url": "/v2.0.0/settings/2276",
+    "name": "Cart ID",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2277,
+    "url": "/v2.0.0/settings/2277",
+    "name": "Cart length",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2278,
+    "url": "/v2.0.0/settings/2278",
+    "name": "Cart width",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2279,
+    "url": "/v2.0.0/settings/2279",
+    "name": "Cart height",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2280,
+    "url": "/v2.0.0/settings/2280",
+    "name": "Offset to the cart's locked wheels",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2301,
+    "url": "/v2.0.0/settings/2301",
+    "name": "Linear acceleration",
+    "value": "100",
+    "default": "50",
+    "parent_name": ""
+  },
+  {
+    "id": 2305,
+    "url": "/v2.0.0/settings/2305",
+    "name": "Trigger skid detection error",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2310,
+    "url": "/v2.0.0/settings/2310",
+    "name": "Obstacle threshold",
+    "value": "0.3",
+    "default": "0.3",
+    "parent_name": ""
+  },
+  {
+    "id": 2312,
+    "url": "/v2.0.0/settings/2312",
+    "name": "Start at launch",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2313,
+    "url": "/v2.0.0/settings/2313",
+    "name": "Sensor 0 (head left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2314,
+    "url": "/v2.0.0/settings/2314",
+    "name": "Sensor 1 (head left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2315,
+    "url": "/v2.0.0/settings/2315",
+    "name": "Sensor 2 (head left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2316,
+    "url": "/v2.0.0/settings/2316",
+    "name": "Sensor 3 (left front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2317,
+    "url": "/v2.0.0/settings/2317",
+    "name": "Sensor 4 (left front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2318,
+    "url": "/v2.0.0/settings/2318",
+    "name": "Sensor 5 (left front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2319,
+    "url": "/v2.0.0/settings/2319",
+    "name": "Sensor 6 (left back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2320,
+    "url": "/v2.0.0/settings/2320",
+    "name": "Sensor 7 (left back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2321,
+    "url": "/v2.0.0/settings/2321",
+    "name": "Sensor 8 (left back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2322,
+    "url": "/v2.0.0/settings/2322",
+    "name": "Sensor 9 (tail left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2323,
+    "url": "/v2.0.0/settings/2323",
+    "name": "Sensor 10 (tail left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2324,
+    "url": "/v2.0.0/settings/2324",
+    "name": "Sensor 11 (tail left module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2325,
+    "url": "/v2.0.0/settings/2325",
+    "name": "Sensor 12 (tail right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2326,
+    "url": "/v2.0.0/settings/2326",
+    "name": "Sensor 13 (tail right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2327,
+    "url": "/v2.0.0/settings/2327",
+    "name": "Sensor 14 (tail right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2328,
+    "url": "/v2.0.0/settings/2328",
+    "name": "Sensor 15 (right back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2329,
+    "url": "/v2.0.0/settings/2329",
+    "name": "Sensor 16 (right back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2330,
+    "url": "/v2.0.0/settings/2330",
+    "name": "Sensor 17 (right back module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2331,
+    "url": "/v2.0.0/settings/2331",
+    "name": "Sensor 18 (right front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2332,
+    "url": "/v2.0.0/settings/2332",
+    "name": "Sensor 19 (right front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2333,
+    "url": "/v2.0.0/settings/2333",
+    "name": "Sensor 20 (right front module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2334,
+    "url": "/v2.0.0/settings/2334",
+    "name": "Sensor 21 (head right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2335,
+    "url": "/v2.0.0/settings/2335",
+    "name": "Sensor 22 (head right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2336,
+    "url": "/v2.0.0/settings/2336",
+    "name": "Sensor 23 (head right module)",
+    "value": "true",
+    "default": "true",
+    "parent_name": "/launch/proximity_sensors/auto_start"
+  },
+  {
+    "id": 2390,
+    "url": "/v2.0.0/settings/2390",
+    "name": "Maximum undocking speed",
+    "value": "0.25",
+    "default": "0.25",
+    "parent_name": ""
+  },
+  {
+    "id": 2396,
+    "url": "/v2.0.0/settings/2396",
+    "name": "Turn off TOP FUSE",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2406,
+    "url": "/v2.0.0/settings/2406",
+    "name": "X-offset for Reverse docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2407,
+    "url": "/v2.0.0/settings/2407",
+    "name": "Y-offset for Reverse docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2408,
+    "url": "/v2.0.0/settings/2408",
+    "name": "Orientation offset for Reverse docking to shelves and Bar-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2409,
+    "url": "/v2.0.0/settings/2409",
+    "name": "Global X-offset for Reverse docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2410,
+    "url": "/v2.0.0/settings/2410",
+    "name": "Global Y-offset for Reverse docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2411,
+    "url": "/v2.0.0/settings/2411",
+    "name": "Global orientation offset for Reverse docking to V, VL, and L-markers",
+    "value": "0.0",
+    "default": "0.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2426,
+    "url": "/v2.0.0/settings/2426",
+    "name": "ROSBridge authorization",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2437,
+    "url": "/v2.0.0/settings/2437",
+    "name": "Centripetal force limitation",
+    "value": "100",
+    "default": "100",
+    "parent_name": ""
+  },
+  {
+    "id": 2455,
+    "url": "/v2.0.0/settings/2455",
+    "name": "Advanced docking and Relative move routine",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2472,
+    "url": "/v2.0.0/settings/2472",
+    "name": "Safety profile",
+    "value": "safety_profile_1",
+    "default": "safety_profile_1",
+    "parent_name": ""
+  },
+  {
+    "id": 2477,
+    "url": "/v2.0.0/settings/2477",
+    "name": "Drive against Directional zones when replanning",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2837,
+    "url": "/v2.0.0/settings/2837",
+    "name": "3D cameras depth",
+    "value": "0.05",
+    "default": "0.05",
+    "parent_name": ""
+  }
+]

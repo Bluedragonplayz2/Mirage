@@ -1,10 +1,21 @@
-using System.Globalization;
+using Mir_Utilities.Common;
+
+namespace Mir_Utilities.MirApi;
+
 using System.Net;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 
-namespace Mir_Utilities;
+public interface IApiCaller
+{
+    void CreateMiRToken();
+    void GetApi(string url);
+    void PostApi();
+    void PutApi();
+    void DeleteApi();
+    
+}
 
 public class ApiCaller
 {
@@ -12,6 +23,9 @@ public class ApiCaller
     //Default value of Mir Robots
     private const String _protocol = "http";
     private const String _apiVersion = "v2.0.0";
+    
+    private static readonly log4net.ILog LOGGER = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     
     private bool _BatchMode = false;
     private List<TaskCompletionSource<RestResponse>> _individualCompletionSources = new List<TaskCompletionSource<RestResponse>>();
@@ -32,7 +46,15 @@ public class ApiCaller
         _client.AddDefaultHeaders(headers);
         _authId = authId;
         //Generating First Token
-        GetMirToken();
+        try
+        {
+            CreateMiRToken();
+        }
+        catch (Exception ex)
+        {
+            LOGGER.Error("Failed to generate token for the first time", ex);
+        }
+
     }
     private readonly RestClient _client;
     private DateTime _tokenExpiry = DateTime.Now;
@@ -54,13 +76,13 @@ public class ApiCaller
         if(DateTime.Compare(_tokenExpiry, DateTime.Now) < 0)
         {
             //if not get a new token
-            GetMirToken();
+            CreateMiRToken();
         }
         request.AddHeader("mir-auth-token", _authToken);
         return await  _client.ExecuteAsync(request);
     }
 
-    private void GetMirToken()
+    public void CreateMiRToken()
     {
         var request = new RestRequest("users/auth", Method.Post);
         request.AddHeader("Authorization", _authId);

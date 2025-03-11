@@ -1,5 +1,4 @@
-﻿namespace Mir_Utilities;
-
+﻿namespace Mir_Utilities.MirApi;
 public class FootprintApiSchema
 {
     public struct GetFootprintsSnapshot

@@ -1,6 +1,5 @@
 ﻿
-namespace Mir_Utilities;
-
+namespace Mir_Utilities.MirApi;
 public class PositionApi
 {
     public static async Task<List<PositionApiSchema.GetPositionsByMapSnapshot>?> GetPositionsByMap(ApiCaller caller, String mapId)

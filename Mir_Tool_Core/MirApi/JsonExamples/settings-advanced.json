@@ -1,0 +1,722 @@
+﻿[
+  {
+    "id": 1713,
+    "url": "/v2.0.0/settings/advanced/1713",
+    "name": "IMU yaw gain",
+    "value": "0.99478197570874527",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 1812,
+    "url": "/v2.0.0/settings/advanced/1812",
+    "name": "Distance to marker for disabling collision checks",
+    "value": "0.2",
+    "default": "0.2",
+    "parent_name": ""
+  },
+  {
+    "id": 1813,
+    "url": "/v2.0.0/settings/advanced/1813",
+    "name": "Distance to pallet for disabling collision checks",
+    "value": "1.7",
+    "default": "1.7",
+    "parent_name": ""
+  },
+  {
+    "id": 1836,
+    "url": "/v2.0.0/settings/advanced/1836",
+    "name": "Charging station side threshold",
+    "value": "0.4",
+    "default": "0.4",
+    "parent_name": ""
+  },
+  {
+    "id": 1838,
+    "url": "/v2.0.0/settings/advanced/1838",
+    "name": "Charging station angle threshold",
+    "value": "20",
+    "default": "20",
+    "parent_name": ""
+  },
+  {
+    "id": 1849,
+    "url": "/v2.0.0/settings/advanced/1849",
+    "name": "Battery percentage threshold for topping up state",
+    "value": "95",
+    "default": "95",
+    "parent_name": ""
+  },
+  {
+    "id": 1851,
+    "url": "/v2.0.0/settings/advanced/1851",
+    "name": "Battery topping up time",
+    "value": "3600",
+    "default": "3600",
+    "parent_name": ""
+  },
+  {
+    "id": 1853,
+    "url": "/v2.0.0/settings/advanced/1853",
+    "name": "Maximum charge cycle time",
+    "value": "18000",
+    "default": "18000",
+    "parent_name": ""
+  },
+  {
+    "id": 1865,
+    "url": "/v2.0.0/settings/advanced/1865",
+    "name": "Docked at marker side threshold",
+    "value": "0.4",
+    "default": "0.4",
+    "parent_name": ""
+  },
+  {
+    "id": 1866,
+    "url": "/v2.0.0/settings/advanced/1866",
+    "name": "Docked at marker angle threshold",
+    "value": "20",
+    "default": "20",
+    "parent_name": ""
+  },
+  {
+    "id": 1873,
+    "url": "/v2.0.0/settings/advanced/1873",
+    "name": "Enable odometry slope correction.",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1874,
+    "url": "/v2.0.0/settings/advanced/1874",
+    "name": "Odometry slope correction inclination factor",
+    "value": "0.98",
+    "default": "0.98",
+    "parent_name": ""
+  },
+  {
+    "id": 1875,
+    "url": "/v2.0.0/settings/advanced/1875",
+    "name": "Odometry slope correction inclination threshold",
+    "value": "3.5",
+    "default": "3.5",
+    "parent_name": ""
+  },
+  {
+    "id": 1994,
+    "url": "/v2.0.0/settings/advanced/1994",
+    "name": "Ping watchdog",
+    "value": "true",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 1995,
+    "url": "/v2.0.0/settings/advanced/1995",
+    "name": "Ping IP",
+    "value": "10.236.49.180",
+    "default": "192.168.12.20",
+    "parent_name": "/wifi_watchdog/ping/enabled"
+  },
+  {
+    "id": 2060,
+    "url": "/v2.0.0/settings/advanced/2060",
+    "name": "Modbus encoding.",
+    "value": "big-endian",
+    "default": "big-endian",
+    "parent_name": ""
+  },
+  {
+    "id": 2106,
+    "url": "/v2.0.0/settings/advanced/2106",
+    "name": "Parameter for driving more straight during docking",
+    "value": "1.0",
+    "default": "1.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2165,
+    "url": "/v2.0.0/settings/advanced/2165",
+    "name": "Obstacle history clearing",
+    "value": "clear_all",
+    "default": "no_clearing",
+    "parent_name": ""
+  },
+  {
+    "id": 2172,
+    "url": "/v2.0.0/settings/advanced/2172",
+    "name": "User disconnected Wi-Fi",
+    "value": "false",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2173,
+    "url": "/v2.0.0/settings/advanced/2173",
+    "name": "Username",
+    "value": "root",
+    "default": "root",
+    "parent_name": ""
+  },
+  {
+    "id": 2174,
+    "url": "/v2.0.0/settings/advanced/2174",
+    "name": "Password",
+    "value": "00000000",
+    "default": "00000000",
+    "parent_name": ""
+  },
+  {
+    "id": 2175,
+    "url": "/v2.0.0/settings/advanced/2175",
+    "name": "Front laser scanner transform: Yaw",
+    "value": "0.7854",
+    "default": "0.7854",
+    "parent_name": ""
+  },
+  {
+    "id": 2176,
+    "url": "/v2.0.0/settings/advanced/2176",
+    "name": "Front laser scanner transform: Y",
+    "value": "0.205",
+    "default": "0.205",
+    "parent_name": ""
+  },
+  {
+    "id": 2177,
+    "url": "/v2.0.0/settings/advanced/2177",
+    "name": "Front laser scanner transform: X",
+    "value": "0.315",
+    "default": "0.315",
+    "parent_name": ""
+  },
+  {
+    "id": 2179,
+    "url": "/v2.0.0/settings/advanced/2179",
+    "name": "Robot wheelbase length",
+    "value": "0.403",
+    "default": "0.403",
+    "parent_name": ""
+  },
+  {
+    "id": 2180,
+    "url": "/v2.0.0/settings/advanced/2180",
+    "name": "Diameter of the drive wheels",
+    "value": "0.2",
+    "default": "0.2",
+    "parent_name": ""
+  },
+  {
+    "id": 2181,
+    "url": "/v2.0.0/settings/advanced/2181",
+    "name": "Rear laser scanner transform: Yaw",
+    "value": "-2.3562",
+    "default": "-2.3562",
+    "parent_name": ""
+  },
+  {
+    "id": 2182,
+    "url": "/v2.0.0/settings/advanced/2182",
+    "name": "Rear laser scanner transform: Y",
+    "value": "-0.205",
+    "default": "-0.205",
+    "parent_name": ""
+  },
+  {
+    "id": 2183,
+    "url": "/v2.0.0/settings/advanced/2183",
+    "name": "Rear laser scanner transform: X",
+    "value": "-0.315",
+    "default": "-0.315",
+    "parent_name": ""
+  },
+  {
+    "id": 2192,
+    "url": "/v2.0.0/settings/advanced/2192",
+    "name": "Charging station reverse distance",
+    "value": "0.6",
+    "default": "0.6",
+    "parent_name": ""
+  },
+  {
+    "id": 2194,
+    "url": "/v2.0.0/settings/advanced/2194",
+    "name": "Distance to VL-marker before muting front protective fields.",
+    "value": "0.4",
+    "default": "0.4",
+    "parent_name": ""
+  },
+  {
+    "id": 2208,
+    "url": "/v2.0.0/settings/advanced/2208",
+    "name": "Dynamic driving",
+    "value": "false",
+    "default": "true",
+    "parent_name": ""
+  },
+  {
+    "id": 2211,
+    "url": "/v2.0.0/settings/advanced/2211",
+    "name": "Cart reverse timeout",
+    "value": "120.0",
+    "default": "120.0",
+    "parent_name": ""
+  },
+  {
+    "id": 2213,
+    "url": "/v2.0.0/settings/advanced/2213",
+    "name": "Robot footprint with hook",
+    "value": "",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2251,
+    "url": "/v2.0.0/settings/advanced/2251",
+    "name": "Current robot footprint",
+    "value": "ab37b6e6-2f9a-11ef-93c3-000e8eacabab",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2337,
+    "url": "/v2.0.0/settings/advanced/2337",
+    "name": "Calibration offset for sensor 0 - front-left corner, front-side (board 0)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2338,
+    "url": "/v2.0.0/settings/advanced/2338",
+    "name": "Calibration offset for sensor 1 - front-left corner, front-side (board 0)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2339,
+    "url": "/v2.0.0/settings/advanced/2339",
+    "name": "Calibration offset for sensor 2 - front-left corner, front-side (board 0)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2340,
+    "url": "/v2.0.0/settings/advanced/2340",
+    "name": "Calibration offset for sensor 3 - front-left corner, left-side (board 1)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2341,
+    "url": "/v2.0.0/settings/advanced/2341",
+    "name": "Calibration offset for sensor 4 - front-left corner, left-side (board 1)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2342,
+    "url": "/v2.0.0/settings/advanced/2342",
+    "name": "Calibration offset for sensor 5 - front-left corner, left-side (board 1)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2343,
+    "url": "/v2.0.0/settings/advanced/2343",
+    "name": "Calibration offset for sensor 6 - rear-left corner, left-side (board 2)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2344,
+    "url": "/v2.0.0/settings/advanced/2344",
+    "name": "Calibration offset for sensor 7 - rear-left corner, left-side (board 2)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2345,
+    "url": "/v2.0.0/settings/advanced/2345",
+    "name": "Calibration offset for sensor 8 - rear-left corner, left-side (board 2)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2346,
+    "url": "/v2.0.0/settings/advanced/2346",
+    "name": "Calibration offset for sensor 9 - rear-left corner, rear-side (board 3)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2347,
+    "url": "/v2.0.0/settings/advanced/2347",
+    "name": "Calibration offset for sensor 10 - rear-left corner, rear-side (board 3)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2348,
+    "url": "/v2.0.0/settings/advanced/2348",
+    "name": "Calibration offset for sensor 11 - rear-left corner, rear-side (board 3)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2349,
+    "url": "/v2.0.0/settings/advanced/2349",
+    "name": "Calibration offset for sensor 12 - rear-right corner, rear-side (board 4)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2350,
+    "url": "/v2.0.0/settings/advanced/2350",
+    "name": "Calibration offset for sensor 13 - rear-right corner, rear-side (board 4)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2351,
+    "url": "/v2.0.0/settings/advanced/2351",
+    "name": "Calibration offset for sensor 14 - rear-right corner, rear-side (board 4)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2352,
+    "url": "/v2.0.0/settings/advanced/2352",
+    "name": "Calibration offset for sensor 15 - rear-right corner, right-side (board 5)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2353,
+    "url": "/v2.0.0/settings/advanced/2353",
+    "name": "Calibration offset for sensor 16 - rear-right corner, right-side (board 5)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2354,
+    "url": "/v2.0.0/settings/advanced/2354",
+    "name": "Calibration offset for sensor 17 - rear-right corner, right-side (board 5)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2355,
+    "url": "/v2.0.0/settings/advanced/2355",
+    "name": "Calibration offset for sensor 18 - front-right corner, right-side (board 6)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2356,
+    "url": "/v2.0.0/settings/advanced/2356",
+    "name": "Calibration offset for sensor 19 - front-right corner, right-side (board 6)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2357,
+    "url": "/v2.0.0/settings/advanced/2357",
+    "name": "Calibration offset for sensor 20 - front-right corner, right-side (board 6)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2358,
+    "url": "/v2.0.0/settings/advanced/2358",
+    "name": "Calibration offset for sensor 21 - front-right corner, front-side (board 7)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2359,
+    "url": "/v2.0.0/settings/advanced/2359",
+    "name": "Calibration offset for sensor 22 - front-right corner, front-side (board 7)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2360,
+    "url": "/v2.0.0/settings/advanced/2360",
+    "name": "Calibration offset for sensor 23 - front-right corner, front-side (board 7)",
+    "value": "0",
+    "default": "0",
+    "parent_name": ""
+  },
+  {
+    "id": 2361,
+    "url": "/v2.0.0/settings/advanced/2361",
+    "name": "Calibration gain for sensor 0 - front-left corner, front-side (board 0)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2362,
+    "url": "/v2.0.0/settings/advanced/2362",
+    "name": "Calibration gain for sensor 1 - front-left corner, front-side (board 0)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2363,
+    "url": "/v2.0.0/settings/advanced/2363",
+    "name": "Calibration gain for sensor 2 - front-left corner, front-side (board 0)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2364,
+    "url": "/v2.0.0/settings/advanced/2364",
+    "name": "Calibration gain for sensor 3 - front-left corner, left-side (board 1)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2365,
+    "url": "/v2.0.0/settings/advanced/2365",
+    "name": "Calibration gain for sensor 4 - front-left corner, left-side (board 1)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2366,
+    "url": "/v2.0.0/settings/advanced/2366",
+    "name": "Calibration gain for sensor 5 - front-left corner, left-side (board 1)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2367,
+    "url": "/v2.0.0/settings/advanced/2367",
+    "name": "Calibration gain for sensor 6 - rear-left corner, left-side (board 2)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2368,
+    "url": "/v2.0.0/settings/advanced/2368",
+    "name": "Calibration gain for sensor 7 - rear-left corner, left-side (board 2)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2369,
+    "url": "/v2.0.0/settings/advanced/2369",
+    "name": "Calibration gain for sensor 8 - rear-left corner, left-side (board 2)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2370,
+    "url": "/v2.0.0/settings/advanced/2370",
+    "name": "Calibration gain for sensor 9 - rear-left corner, rear-side (board 3)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2371,
+    "url": "/v2.0.0/settings/advanced/2371",
+    "name": "Calibration gain for sensor 10 - rear-left corner, rear-side (board 3)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2372,
+    "url": "/v2.0.0/settings/advanced/2372",
+    "name": "Calibration gain for sensor 11 - rear-left corner, rear-side (board 3)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2373,
+    "url": "/v2.0.0/settings/advanced/2373",
+    "name": "Calibration gain for sensor 12 - rear-right corner, rear-side (board 4)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2374,
+    "url": "/v2.0.0/settings/advanced/2374",
+    "name": "Calibration gain for sensor 13 - rear-right corner, rear-side (board 4)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2375,
+    "url": "/v2.0.0/settings/advanced/2375",
+    "name": "Calibration gain for sensor 14 - rear-right corner, rear-side (board 4)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2376,
+    "url": "/v2.0.0/settings/advanced/2376",
+    "name": "Calibration gain for sensor 15 - rear-right corner, right-side (board 5)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2377,
+    "url": "/v2.0.0/settings/advanced/2377",
+    "name": "Calibration gain for sensor 16 - rear-right corner, right-side (board 5)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2378,
+    "url": "/v2.0.0/settings/advanced/2378",
+    "name": "Calibration gain for sensor 17 - rear-right corner, right-side (board 5)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2379,
+    "url": "/v2.0.0/settings/advanced/2379",
+    "name": "Calibration gain for sensor 18 - front-right corner, right-side (board 6)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2380,
+    "url": "/v2.0.0/settings/advanced/2380",
+    "name": "Calibration gain for sensor 19 - front-right corner, right-side (board 6)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2381,
+    "url": "/v2.0.0/settings/advanced/2381",
+    "name": "Calibration gain for sensor 20 - front-right corner, right-side (board 6)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2382,
+    "url": "/v2.0.0/settings/advanced/2382",
+    "name": "Calibration gain for sensor 21 - front-right corner, front-side (board 7)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2383,
+    "url": "/v2.0.0/settings/advanced/2383",
+    "name": "Calibration gain for sensor 22 - front-right corner, front-side (board 7)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2384,
+    "url": "/v2.0.0/settings/advanced/2384",
+    "name": "Calibration gain for sensor 23 - front-right corner, front-side (board 7)",
+    "value": "1",
+    "default": "1",
+    "parent_name": ""
+  },
+  {
+    "id": 2391,
+    "url": "/v2.0.0/settings/advanced/2391",
+    "name": "Current robot footprint",
+    "value": "ab37b6e6-2f9a-11ef-93c3-000e8eacabab",
+    "default": "",
+    "parent_name": ""
+  },
+  {
+    "id": 2436,
+    "url": "/v2.0.0/settings/advanced/2436",
+    "name": "Motor velocity controller",
+    "value": "more_agressive",
+    "default": "default",
+    "parent_name": ""
+  },
+  {
+    "id": 2452,
+    "url": "/v2.0.0/settings/advanced/2452",
+    "name": "Default gateway",
+    "value": "from_profile",
+    "default": "from_profile",
+    "parent_name": ""
+  },
+  {
+    "id": 2453,
+    "url": "/v2.0.0/settings/advanced/2453",
+    "name": "Gateway IP",
+    "value": "192.168.12.1",
+    "default": "192.168.12.1",
+    "parent_name": "/default_gateway/config"
+  },
+  {
+    "id": 2505,
+    "url": "/v2.0.0/settings/advanced/2505",
+    "name": "Motion warning volume",
+    "value": "50",
+    "default": "50",
+    "parent_name": ""
+  },
+  {
+    "id": 2522,
+    "url": "/v2.0.0/settings/advanced/2522",
+    "name": "Experimental localization",
+    "value": "false",
+    "default": "false",
+    "parent_name": ""
+  },
+  {
+    "id": 2537,
+    "url": "/v2.0.0/settings/advanced/2537",
+    "name": "Experimental fleet collision avoidance",
+    "value": "true",
+    "default": "true",
+    "parent_name": ""
+  }
+]
