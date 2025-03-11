@@ -1,7 +1,10 @@
-﻿
+
 using Mir_Utilities.MirApi;
 using System.Diagnostics;
+
 using Mir_Utilities.Common;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Mir_Utilities;
 
@@ -49,6 +52,17 @@ public class SyncSite
             "Exported site data from source robot",
             source.Name
         ));
+
+        string sessionHash = byteSHA.SHA256Byte(session);
+        
+        OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+            StatusObject.TaskInterimEvent.EventLevel.INFO,
+            sessionHash,
+            source.Name
+        ));
+        
+        logger.Info($"Exported site data from {source.Name} with session hash {sessionHash}");
+        
         try
         {
             using (var fs = new FileStream($"/export/{DateTime.Now.ToString()}.SITE", FileMode.Create, FileAccess.Write))
@@ -58,14 +72,16 @@ public class SyncSite
         }
         catch (Exception ex)
         {
-            
             logger.Error("failed to write session to file");
+            logger.Error(ex.Message);
+            logger.Error(ex.StackTrace);
+            
         }
         //import site data
         List<Task> importingTasks = new List<Task>();
         foreach (RobotSchema.Robot target in targets)
         {
-            if (!(target == source))
+            if (target != source)
             { 
                 Task task = Task.Run(() =>
                 {
@@ -114,6 +130,11 @@ public class SyncSite
                 int i = sessionsSnapshot.FindIndex (s => s.Name == siteName);
                 if (i != -1)
                 {
+                    
+                    byte[] importBackup = SessionApi.SessionExport(targetApi, sessionsSnapshot[i].Guid).Result;
+                    string importHash = byteSHA.SHA256Byte(importBackup);
+                    logger.Info($"Target robot {target.Name} has an existing site with hash of {importHash}");
+                    
                     status = CommonApi.GetRobotStatus(targetApi).Result;
                     if (false)
                     {
@@ -160,7 +181,6 @@ public class SyncSite
                     
                 }
             }
-            logger.Info(session.ToString());
             SessionApiSchema.GetActiveSessionImportSnapshot sessionImport = new SessionApiSchema.GetActiveSessionImportSnapshot();
             try
             {
@@ -248,6 +268,10 @@ public class SyncSite
                     {
                         CommonApi.AdjustRobotMapAndPosition(targetApi, status.MapId,status.RobotPosition);
                     }
+                    Thread.Sleep(100);
+                    byte[] importBackup = SessionApi.SessionExport(targetApi, sessionsSnapshot[i].Guid).Result;
+                    string importHash = byteSHA.SHA256Byte(importBackup);
+                    logger.Info($"Target robot {target.Name} finished with a final hash of {importHash}");
                 }
 
             }
