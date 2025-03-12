@@ -1,3 +1,4 @@
+using System.Security.Authentication;
 using Mir_Utilities.Common;
 
 namespace Mir_Utilities.MirApi;
@@ -53,6 +54,7 @@ public class ApiCaller
         catch (Exception ex)
         {
             LOGGER.Error("Failed to generate token for the first time", ex);
+            throw new AuthenticationException("Failed to call token auth API, are you sure robot is on and reachable?");
         }
 
     }
