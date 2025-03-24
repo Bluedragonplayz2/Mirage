@@ -80,6 +80,7 @@ class CommandLine
             {
                 "synsite" or "ss" => () => new SyncSite().CommandHandler(arguments, flags, options),
                 "clearfootprint" or "cf" => () => new ClearFootprint().CommandHandler(arguments, flags, options),
+                "experimental" or "exp" => () => new Experimental().CommandHandler(arguments, flags, options),
                 _ => null
 
             };

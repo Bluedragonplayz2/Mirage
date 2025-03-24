@@ -25,9 +25,10 @@ public class ZoneApi
         return zoneListSnapshot;
     }
     
-    public static async Task<ZoneApiSchema.GetZoneByGuidSnaphot> GetZoneByGuid(ApiCaller caller, String guid)
+    public static async Task<ZoneApiSchema.GetZoneByGuidSnaphot?> GetZoneByGuid(ApiCaller caller, String guid)
     {
         dynamic zoneApi = await caller.GetApi($"zones/{guid}");
+        if (zoneApi == null){return null;}
         ZoneApiSchema.GetZoneByGuidSnaphot zoneSnapshot = new ZoneApiSchema.GetZoneByGuidSnaphot();
         zoneSnapshot.Name = zoneApi.name!;
         zoneSnapshot.Guid = zoneApi.guid!;
@@ -77,5 +78,9 @@ public class ZoneApi
         };
         dynamic response = await caller.PutApi($"zones/{guid}", zone);
         return response.guid!;
+    }
+    public static async Task DeleteZone(ApiCaller caller, string guid)
+    {
+        await caller.DeleteApi($"zones/{guid}");
     }
 }

@@ -25,7 +25,16 @@ public class Map
         public float PosY { get; private set; }
         public float Orientation { get; private set; }
         public int TypeId { get; private set; }
-        public Position[] HelperPositions { get; set; } = [];
+        public string[] HelperPositionsGuid { get; set; } = [];
+        public void SetPositionData(string guid, string name, float posX, float posY, float orientation, int typeId)
+        {
+            Guid = guid;
+            Name = name;
+            PosX = posX;
+            PosY = posY;
+            Orientation = orientation;
+            TypeId = typeId;
+        }
     }
 
     public class Zone
@@ -36,30 +45,55 @@ public class Map
         public int TypeId { get; private set; }
         public float StrokeWidth { get; private set; }
         public float Direction { get; private set; }
-        public Coordinates[] Polygon { get; private set; } = [];
+        public Coordinates[] Polygon { get;  set; } = [];
 
-        public class Coordinates
+        public struct Coordinates (float X, float Y)
         {
-            public float X { get; private set; }
-            public float Y { get; private set; }
+            public float X { get; init; } = X;
+            public float Y { get; init; } = Y;
+
         }
 
         public object? Actions { get; private set; } = null;
+        public void SetZoneData(string guid, string name, string shapeType, int typeId, float strokeWidth, float direction, Coordinates[] polygon, object? actions)
+        {
+            Guid = guid;
+            Name = name;
+            ShapeType = shapeType;
+            TypeId = typeId;
+            StrokeWidth = strokeWidth;
+            Direction = direction;
+            Polygon = polygon;
+            Actions = actions;
+        }
 
     }
 
     public class PathGuide
     {
-        public string Guid { get; set; } = "";
-        public string Name { get; set; } = "";
+        public string Guid { get; private set; } = "";
+        public string Name { get; private set; } = "";
         public PathPosition[] PathPositions { get; set; } = [];
 
         public class PathPosition
         {
-            public string Guid { get; set; } = "";
-            public string PositionGuid { get; set; } = "";
-            public int Priority { get; set; }
-            public string PositionType { get; set; } = "";
+            public string Guid { get; private set; } = "";
+            public string PositionGuid { get; private set; } = "";
+            public int Priority { get; private set; }
+            public string PositionType { get; private set; } = "";
+            public void SetPathPositionData(string guid, string positionGuid, int priority, string positionType)
+            {
+                Guid = guid;
+                PositionGuid = positionGuid;
+                Priority = priority;
+                PositionType = positionType;
+            }
+        }
+
+        public void SetPathGuideData(string guid, string name)
+        {
+            Guid = guid;
+            Name = name;
         }
     }
     public void SetBasicMapData(string guid, string name, string siteId, float originX, float originY, float resolution, float originTheta, string baseMap)
@@ -73,7 +107,7 @@ public class Map
         OriginTheta = originTheta;
         BaseMap = Convert.FromBase64String(baseMap);
     }
-
+    
 
 
     public string GetMapBase64()

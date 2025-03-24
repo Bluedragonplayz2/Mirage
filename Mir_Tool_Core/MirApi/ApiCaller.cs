@@ -118,29 +118,27 @@ public class ApiCaller
         var request = new RestRequest(url);
         
         RestResponse response = await RequestCaller(request);
-        if (response.IsSuccessful) 
+        if (response.IsSuccessful)
         {
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            dynamic? body = null;
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                throw new FileNotFoundException($"error occured when executing GET:{url}");
-            }
-            else if(response.Content == null)
-            {
-                return true;
-            }
-            else
-            {   
-                dynamic? body = JsonConvert.DeserializeObject(response.Content);
-                if(body == null){ return true; }
+                body = JsonConvert.DeserializeObject(response.Content);
                 return body;
             }
-        }
-        else
-        {
-            throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
-        }
 
-       
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                LOGGER.Warn($"url:{url} return 404 not found returning null");
+                return null;
+            }
+            LOGGER.Warn($"url:{url} returns unusual status code [{response.StatusCode}] will attempt to parse content anyway");
+            body = JsonConvert.DeserializeObject(response.Content);
+            return body;
+            
+        }
+        throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+        
     }
 
     public async Task<dynamic> PostApi(String url, Object content)

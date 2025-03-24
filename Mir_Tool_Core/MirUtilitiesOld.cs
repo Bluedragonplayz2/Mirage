@@ -1,4 +1,5 @@
 ﻿
+
 /*
 using Newtonsoft.Json;
 
@@ -160,7 +161,6 @@ public class MirUtilitiesOld
         
         
         
-        /*
         Map map = new Map();
         
         Task getBasicMapInfo = new Task(async () =>
@@ -359,7 +359,6 @@ public class MirUtilitiesOld
         await Task.WhenAll(getBasicMapInfo, getMapPositionsInfo, getMapZonesInfo, getMapPathGuidesInfo);
         
         return map;
-        #1#
     }
     
     private List<Map.Position> RemoveDuplicatedHelperPositions(List<Map.Position> positionList)
@@ -550,10 +549,6 @@ public class MirUtilitiesOld
         }
 
         consoleMessage("Completed Import");
-
-
-
-
 
     }
 }*/
