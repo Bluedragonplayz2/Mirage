@@ -18,6 +18,7 @@ public class ClearMission
 
     public void CommandHandler(List<string> arguments, List<string> flags, List<string> options)
     {
+        string siteName = arguments.Count > 1 ? arguments[1] :  "";
         string[] targetRobots = arguments[0].Split(",");
         List<RobotSchema.Robot> targetRobotsInformation = new List<RobotSchema.Robot>();
         foreach (string targetRobot in targetRobots)
@@ -87,7 +88,7 @@ public class ClearMission
         {
             try
             {
-                Mir_Utilities.ClearMission.ClearMissionFromRobot(robot);
+                Mir_Utilities.ClearMission.ClearMissionFromRobot(robot, siteName);
             }
             catch (Exception e)
             {
