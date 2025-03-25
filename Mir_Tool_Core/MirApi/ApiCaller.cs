@@ -1,10 +1,22 @@
-using System.Globalization;
+using System.Security.Authentication;
+using Mir_Utilities.Common;
+
+namespace Mir_Utilities.MirApi;
+
 using System.Net;
 using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Serializers.NewtonsoftJson;
 
-namespace Mir_Utilities;
+public interface IApiCaller
+{
+    void CreateMiRToken();
+    void GetApi(string url);
+    void PostApi();
+    void PutApi();
+    void DeleteApi();
+    
+}
 
 public class ApiCaller
 {
@@ -12,6 +24,9 @@ public class ApiCaller
     //Default value of Mir Robots
     private const String _protocol = "http";
     private const String _apiVersion = "v2.0.0";
+    
+    private static readonly log4net.ILog LOGGER = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     
     private bool _BatchMode = false;
     private List<TaskCompletionSource<RestResponse>> _individualCompletionSources = new List<TaskCompletionSource<RestResponse>>();
@@ -32,7 +47,16 @@ public class ApiCaller
         _client.AddDefaultHeaders(headers);
         _authId = authId;
         //Generating First Token
-        GetMirToken();
+        try
+        {
+            CreateMiRToken();
+        }
+        catch (Exception ex)
+        {
+            LOGGER.Error("Failed to generate token for the first time", ex);
+            throw new AuthenticationException("Failed to call token auth API, are you sure robot is on and reachable?");
+        }
+
     }
     private readonly RestClient _client;
     private DateTime _tokenExpiry = DateTime.Now;
@@ -54,13 +78,13 @@ public class ApiCaller
         if(DateTime.Compare(_tokenExpiry, DateTime.Now) < 0)
         {
             //if not get a new token
-            GetMirToken();
+            CreateMiRToken();
         }
         request.AddHeader("mir-auth-token", _authToken);
         return await  _client.ExecuteAsync(request);
     }
 
-    private void GetMirToken()
+    public void CreateMiRToken()
     {
         var request = new RestRequest("users/auth", Method.Post);
         request.AddHeader("Authorization", _authId);
@@ -94,29 +118,27 @@ public class ApiCaller
         var request = new RestRequest(url);
         
         RestResponse response = await RequestCaller(request);
-        if (response.IsSuccessful) 
+        if (response.IsSuccessful)
         {
-            if (response.StatusCode == HttpStatusCode.NotFound)
+            dynamic? body = null;
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                throw new FileNotFoundException($"error occured when executing GET:{url}");
-            }
-            else if(response.Content == null)
-            {
-                return true;
-            }
-            else
-            {   
-                dynamic? body = JsonConvert.DeserializeObject(response.Content);
-                if(body == null){ return true; }
+                body = JsonConvert.DeserializeObject(response.Content);
                 return body;
             }
-        }
-        else
-        {
-            throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
-        }
 
-       
+            if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                LOGGER.Warn($"url:{url} return 404 not found returning null");
+                return null;
+            }
+            LOGGER.Warn($"url:{url} returns unusual status code [{response.StatusCode}] will attempt to parse content anyway");
+            body = JsonConvert.DeserializeObject(response.Content);
+            return body;
+            
+        }
+        throw new HttpRequestException($"error occured when executing GET:{url}, Request address{_client.BuildUri(request)} ,  Error Code:[{response.StatusCode}], Error Message:[{response.Content}]");
+        
     }
 
     public async Task<dynamic> PostApi(String url, Object content)

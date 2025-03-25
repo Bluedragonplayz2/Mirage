@@ -1,4 +1,4 @@
-﻿namespace Mir_Utilities;
+﻿namespace Mir_Utilities.MirApi;
 
 public class MissionQueueApiSchema
 {

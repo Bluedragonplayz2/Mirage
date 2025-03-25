@@ -1,4 +1,5 @@
 ﻿namespace Mir_Utilities;
+using MirApi;
 
 public class MirRobotApi
 {

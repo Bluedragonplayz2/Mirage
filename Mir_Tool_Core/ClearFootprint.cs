@@ -1,4 +1,5 @@
 ﻿using Mir_Utilities.Common;
+using Mir_Utilities.MirApi;
 
 namespace Mir_Utilities;
 
@@ -17,8 +18,8 @@ public class ClearFootprint
         dynamic footprints = apiCaller.GetApi("footprints").Result;
         foreach (dynamic footprint in footprints )
         {
-            dynamic footprintsnapshot =  apiCaller.GetApi("footprints/" + footprint.guid).Result;
-            string footprintCreatorId = footprintsnapshot.created_by_id;
+            dynamic footprintSnapshot =  apiCaller.GetApi("footprints/" + footprint.guid).Result;
+            string footprintCreatorId = footprintSnapshot.created_by_id;
 
             if (footprintCreatorId == id)
             {

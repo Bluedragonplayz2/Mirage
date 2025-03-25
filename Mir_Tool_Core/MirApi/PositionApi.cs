@@ -1,6 +1,5 @@
 ﻿
-namespace Mir_Utilities;
-
+namespace Mir_Utilities.MirApi;
 public class PositionApi
 {
     public static async Task<List<PositionApiSchema.GetPositionsByMapSnapshot>?> GetPositionsByMap(ApiCaller caller, String mapId)
@@ -24,9 +23,13 @@ public class PositionApi
 
         return positionListSnapshot;
     }
-    public static async Task<PositionApiSchema.GetPositionByGuidSnapshot> GetPositionByGuid(ApiCaller caller, String guid)
+    public static async Task<PositionApiSchema.GetPositionByGuidSnapshot?> GetPositionByGuid(ApiCaller caller, String guid)
     {
         dynamic positionsApi = await caller.GetApi($"positions/{guid}");
+        if (positionsApi == null)
+        {
+            return null;
+        }
         PositionApiSchema.GetPositionByGuidSnapshot positionSnapshot = new PositionApiSchema.GetPositionByGuidSnapshot();
         positionSnapshot.Name = positionsApi.name!;
         positionSnapshot.Guid = positionsApi.guid!;
@@ -115,9 +118,9 @@ public class PositionApi
         dynamic response = await caller.PutApi($"positions/{guid}", position);
         return response.guid!;
     }
-    public static void DeletePosition(ApiCaller caller, String guid)
+    public static async Task DeletePosition(ApiCaller caller, String guid)
     {
-        caller.DeleteApi($"positions/{guid}");
+        await caller.DeleteApi($"positions/{guid}");
     }
     
 

@@ -1,5 +1,4 @@
-﻿namespace Mir_Utilities;
-
+﻿namespace Mir_Utilities.MirApi; 
 public class MapApi
 {
     public static async Task<List<MapApiSchema.GetMapSnapshot>?> GetMap(ApiCaller caller)
@@ -22,9 +21,13 @@ public class MapApi
         return mapListSnapshot;
     }
 
-    public static async Task<MapApiSchema.GetMapByGuidSnapshot> GetMapByGuid(ApiCaller caller, String guid)
+    public static async Task<MapApiSchema.GetMapByGuidSnapshot?> GetMapByGuid(ApiCaller caller, String guid)
     {
         dynamic map = await caller.GetApi($"maps/{guid}");
+        if (map == null)
+        {
+            return null;
+        }
         MapApiSchema.GetMapByGuidSnapshot mapSnapshot = new MapApiSchema.GetMapByGuidSnapshot();
         mapSnapshot.Guid = map.guid!;
         mapSnapshot.BaseMap = map.base_map!;
@@ -66,5 +69,9 @@ public class MapApi
         };
         dynamic response = await caller.PutApi($"maps/{guid}", map);
         return response.guid!;
+    }
+    public static async Task DeleteMap(ApiCaller caller, String guid)
+    {
+        await caller.DeleteApi($"maps/{guid}");
     }
 }
