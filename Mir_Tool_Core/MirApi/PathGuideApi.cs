@@ -4,7 +4,7 @@ namespace Mir_Utilities.MirApi;
 
 public class PathGuideApi
 {
-    public static async Task<List<PathGuideApiSchema.GetPathGuidesByMapSnapshot>?> GetPathGuidesByMap(ApiCaller caller, String mapId)
+    public static async Task<List<PathGuideApiSchema.GetPathGuidesByMapSnapshot>?> GetPathGuidesByMap(ApiCaller caller, string mapId)
     {
         dynamic pathGuideList = await caller.GetApi($"maps/{mapId}/path_guides");
         if (pathGuideList.Count == 0)
@@ -24,15 +24,19 @@ public class PathGuideApi
         return pathGuideListSnapshot;
     }
 
-    public static async Task<PathGuideApiSchema.GetPathGuideByGuidSnapshot> GetPathGuideByGuid(ApiCaller caller, String guid)
+    public static async Task<PathGuideApiSchema.GetPathGuideByGuidSnapshot?> GetPathGuideByGuid(ApiCaller caller, string guid)
     {
         dynamic pathGuideApi = await caller.GetApi($"path_guides/{guid}");
+        if (pathGuideApi == null)
+        {
+            return null;
+        }
         PathGuideApiSchema.GetPathGuideByGuidSnapshot pathGuideSnapshot = new PathGuideApiSchema.GetPathGuideByGuidSnapshot();
         pathGuideSnapshot.Guid = pathGuideApi.guid!;
         pathGuideSnapshot.Name = pathGuideApi.name!;
         return pathGuideSnapshot;
     }
-     public static async Task<String> PostPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, String mapId)
+     public static async Task<String> PostPathGuide(ApiCaller caller, String guid, String name, List<Map.PathGuide.PathPosition> pathPositions, string mapId)
     {
         dynamic pathGuide = new
         {
@@ -96,5 +100,10 @@ public class PathGuideApi
     public static void DeletePathGuidePosition(ApiCaller caller, String pathGuideGuid, String positionGuid)
     {
         caller.DeleteApi($"path_guides/{pathGuideGuid}/positions/{positionGuid}");
+    }
+    
+    public static async Task DeletePathGuide(ApiCaller caller, string guid)
+    {
+        await caller.DeleteApi($"path_guides/{guid}");
     }
 }
