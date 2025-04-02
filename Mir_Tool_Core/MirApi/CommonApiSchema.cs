@@ -34,8 +34,12 @@ public class CommonApiSchema
         public enum State
         {
             //Todo: Populate Other States
-            RESUME =3,
+            READY =3,
             PAUSED =4,
+            EXECUTING =5,
+            ESTOP = 10,
+            MANUALCONTROL = 11,
+            ERROR = 12,
         }
         public State RobotMissionQueueState;
     }

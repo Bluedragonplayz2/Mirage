@@ -130,12 +130,98 @@ public class SyncSite
                 int i = sessionsSnapshot.FindIndex (s => s.Name == siteName);
                 if (i != -1)
                 {
-                    
+
                     byte[] importBackup = SessionApi.SessionExport(targetApi, sessionsSnapshot[i].Guid).Result;
                     string importHash = byteSHA.SHA256Byte(importBackup);
                     logger.Info($"Target robot {target.Name} has an existing site with hash of {importHash}");
-                    
+
                     status = CommonApi.GetRobotStatus(targetApi).Result;
+
+                    int count = 0;
+                    while (status.ModeId != 7)
+                    {
+                        logger.Info($"Target robot {target.Name} has a mode of {status.ModeId}");
+                        status = CommonApi.GetRobotStatus(targetApi).Result;
+                        count++;
+                        Thread.Sleep(100);
+                        if (count > 100)
+                        {
+                            OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                                StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                                $"Robot is in an unsupported mode with mode id of {status.ModeId}",
+                                target.Name
+                            ));
+                            taskCompleteReport.PartialFailure(
+                                target.Name,
+                                $"Robot is in an unsupported mode with mode id of {status.ModeId}",
+                                new TimeoutException(),
+                                new StackTrace()
+                            );
+                            return;
+                        }
+
+
+                    }
+
+                    count = 0;
+                    while (status.StateId != 3 || status.StateId != 4)
+                    {
+                        if (count > 100)
+                        {
+                            OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                                StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                                $"Robot has timed out while changing state, {status.StateId}",
+                                target.Name
+                            ));
+                            taskCompleteReport.PartialFailure(
+                                target.Name,
+                                $"Robot has timed out while changing state,{status.StateId}",
+                                new TimeoutException(),
+                                new StackTrace()
+                            );
+                            return;
+                        }
+
+                        if (status.StateId == 5)
+                        {
+                            MissionQueueApi.ClearMissionQueue(targetApi).Wait();
+                            count++;
+                            status = CommonApi.GetRobotStatus(targetApi).Result;
+                            Thread.Sleep(100);
+                        }
+
+                        if (status.StateId == 10 || status.StateId == 11|| status.StateId == 12)
+
+                        {
+                            OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                                StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                                $"Robot is in an unsupported state with state id of {status.StateId}",
+                                target.Name
+                            ));
+                            taskCompleteReport.PartialFailure(
+                                target.Name,
+                                $"Robot is in an unsupported state with state id of {status.StateId}",
+                                new InvalidOperationException(),
+                                new StackTrace()
+                            );
+                            return;
+                        }
+                        OnTaskUpdateEvent(new StatusObject.TaskInterimEvent(
+                            StatusObject.TaskInterimEvent.EventLevel.ERROR,
+                            $"Robot is in an unknown state with state id of {status.StateId}",
+                            target.Name
+                        ));
+                        taskCompleteReport.PartialFailure(
+                            target.Name,
+                            $"Robot is in an unknown state with state id of {status.StateId}",
+                            new Unhandled(),
+                            new StackTrace()
+                        );
+                        return;
+                    }
+                    
+                    
+                    
                     if (false)
                     {
                         //Todo: Safety checks 
@@ -150,11 +236,11 @@ public class SyncSite
                         Thread.Sleep(100);
                         CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000", nullPos);
                         Thread.Sleep(100);
-                        MissionQueueApi.ClearMissionQueue(targetApi);
+                        MissionQueueApi.ClearMissionQueue(targetApi).Wait();
                         Thread.Sleep(100);
                         String s = SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid).Result;
                         Thread.Sleep(100);
-                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.RESUME);
+                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.READY);
                         Thread.Sleep(100);
                     }
                     catch (Exception e)
