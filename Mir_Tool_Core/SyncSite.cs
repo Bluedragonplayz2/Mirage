@@ -214,7 +214,7 @@ public class SyncSite
                         taskCompleteReport.PartialFailure(
                             target.Name,
                             $"Robot is in an unknown state with state id of {status.StateId}",
-                            new Unhandled(),
+                            new ArgumentException(),
                             new StackTrace()
                         );
                         return;
@@ -232,15 +232,9 @@ public class SyncSite
                     nullPos.Orientation = 0;
                     try
                     {
-                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.PAUSED);
-                        Thread.Sleep(100);
                         CommonApi.AdjustRobotMapAndPosition(targetApi, "mirconst-guid-0000-0001-maps00000000", nullPos);
                         Thread.Sleep(100);
-                        MissionQueueApi.ClearMissionQueue(targetApi).Wait();
-                        Thread.Sleep(100);
                         String s = SessionApi.DeleteSession(targetApi, sessionsSnapshot[i].Guid).Result;
-                        Thread.Sleep(100);
-                        CommonApi.ChangeRobotState(targetApi, CommonApiSchema.RobotStatusState.State.READY);
                         Thread.Sleep(100);
                     }
                     catch (Exception e)

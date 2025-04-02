@@ -450,8 +450,7 @@ public class HandleMap
 
             logger.Info("Importing Map Detail");
             updateStatus?.Invoke("Importing Map Detail");
-            await MapApi.PostMap(caller, map.Guid, map.Name, map.SiteId, map.OriginX, map.OriginY, map.Resolution,
-                map.OriginTheta, map.BaseMap);
+            await MapApi.PostMap(caller, map.Guid, map.Name, map.GetMapBase64() , map.SiteId, map.OriginX, map.OriginY, map.OriginTheta , map.Resolution);
             logger.Info("Finished Importing Map Detail");
             updateStatus?.Invoke("Finished Importing Map Detail");
 
@@ -470,8 +469,8 @@ public class HandleMap
                         continue;
                     }
 
-                    await PositionApi.PostPosition(caller, position.Guid, position.Name, position.PosX, position.PosY,
-                        position.Orientation, position.TypeId);
+                    // await PositionApi.PostPosition(caller, position.Guid, position.Name, position.PosX, position.PosY,
+                    //     position.Orientation, position.TypeId);
                     logger.Info($"Finished Importing Position: {position.Name}");
                     updateStatus?.Invoke($"Finished Importing Position: {position.Name}");
                 }
@@ -489,9 +488,17 @@ public class HandleMap
                 {
                     logger.Info($"Importing Zone: {zone.Name}");
                     updateStatus?.Invoke($"Importing Zone: {zone.Name}");
-                    ZoneApiSchema.GetZoneByGuidSnaphot? zoneSnapshot = await ZoneApi.Get
+                    ZoneApiSchema.GetZoneByGuidSnaphot? zoneSnapshot = await ZoneApi.GetZoneByGuid(caller, zone.Guid);
+                }
+                catch (Exception e)
+                {
+                    
                 }
             }
+        }
+        catch (Exception e)
+        {
+                    
         }
 
 
