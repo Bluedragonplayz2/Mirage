@@ -430,7 +430,77 @@ public class HandleMap
     public static async Task ImportMap(RobotSchema.Robot robot, Map map, Action<string>? updateStatus = null)
     {
         //Import a single map to the robot
-        //This function assumes that all object with the same name has been removed
+        //This function assumes that all object with the same name has been removed 
+        
+        //Create and populate basic map detail;
+        try
+        {
+            logger.Info("Setting up API Caller");
+            updateStatus?.Invoke("Setting up API Caller");
+            ApiCaller caller = new ApiCaller(robot.Ip, robot.AuthId);
+            logger.Info("Starting Import");
+            updateStatus?.Invoke("Starting Import");
+            MapApiSchema.GetMapByGuidSnapshot? mapSnapshot = await MapApi.GetMapByGuid(caller, map.Guid);
+            if (mapSnapshot != null)
+            {
+                logger.Info("Map already exists in robot");
+                updateStatus?.Invoke("Map already exists in robot");
+                throw new InvalidOperationException("Map already exists in robot");
+            }
+
+            logger.Info("Importing Map Detail");
+            updateStatus?.Invoke("Importing Map Detail");
+            await MapApi.PostMap(caller, map.Guid, map.Name, map.GetMapBase64() , map.SiteId, map.OriginX, map.OriginY, map.OriginTheta , map.Resolution);
+            logger.Info("Finished Importing Map Detail");
+            updateStatus?.Invoke("Finished Importing Map Detail");
+
+            foreach (Map.Position position in map.Positions)
+            {
+                try
+                {
+                    logger.Info($"Importing Position: {position.Name}");
+                    updateStatus?.Invoke($"Importing Position: {position.Name}");
+                    PositionApiSchema.GetPositionByGuidSnapshot? positionSnapshot =
+                        await PositionApi.GetPositionByGuid(caller, position.Guid);
+                    if (positionSnapshot != null)
+                    {
+                        logger.Info($"Position: {position.Name} already exists in robot");
+                        updateStatus?.Invoke($"Position: {position.Name} already exists in robot");
+                        continue;
+                    }
+
+                    // await PositionApi.PostPosition(caller, position.Guid, position.Name, position.PosX, position.PosY,
+                    //     position.Orientation, position.TypeId);
+                    logger.Info($"Finished Importing Position: {position.Name}");
+                    updateStatus?.Invoke($"Finished Importing Position: {position.Name}");
+                }
+                catch (Exception e)
+                {
+                    logger.Info($"Failed to Import Position: {position.Name}");
+                    updateStatus?.Invoke($"Failed to Import Position: {position.Name}");
+                    return;
+                }
+            }
+
+            foreach (Map.Zone zone in map.Zones)
+            {
+                try
+                {
+                    logger.Info($"Importing Zone: {zone.Name}");
+                    updateStatus?.Invoke($"Importing Zone: {zone.Name}");
+                    ZoneApiSchema.GetZoneByGuidSnaphot? zoneSnapshot = await ZoneApi.GetZoneByGuid(caller, zone.Guid);
+                }
+                catch (Exception e)
+                {
+                    
+                }
+            }
+        }
+        catch (Exception e)
+        {
+                    
+        }
+
 
         return;
     }

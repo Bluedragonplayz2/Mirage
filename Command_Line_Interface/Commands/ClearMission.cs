@@ -6,11 +6,12 @@ public class ClearMission
 {
     /*
     Command to clear all Missions of the credentials provided from a robot
-    Usage: clearmission <robot(s)>
+    Usage: clearmission <robot(s)> <site name>
     Alias: cm
     Arguments:
-    - robot(s): The name of the robot(s) to clear footprints from
+    - robot(s): The name of the robot(s) to clear Missions from
         format: [fleet name*] or [fleet name*]/[robot name*] or [ip*]:[port]:[username*]:[password*] or "all" for all robots in config, seperated by ","
+    - site name: The name of the site to clear Missions from
     */
     private Dictionary<string, int[]> _curserPositions = new Dictionary<string, int[]>();
     private int[] _endCursorPosition = new int[2];

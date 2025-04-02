@@ -9,7 +9,7 @@ public class ClearDashboard
     Usage: cleardashboard <robot(s)>
     Alias: cdash
     Arguments:
-    - robot(s): The name of the robot(s) to clear footprints from
+    - robot(s): The name of the robot(s) to clear dashboards from
         format: [fleet name*] or [fleet name*]/[robot name*] or [ip*]:[port]:[username*]:[password*] or "all" for all robots in config, seperated by ","
     */
     private Dictionary<string, int[]> _curserPositions = new Dictionary<string, int[]>();
