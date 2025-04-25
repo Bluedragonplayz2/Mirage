@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Command_Line_Interface", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUI_Application_Experiment", "WinUI_Application_Experiment\WinUI_Application_Experiment.csproj", "{67B2143E-ABC5-4D55-8580-BDCBC78FDD87}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Desktop_App", "Desktop_App\Desktop_App.csproj", "{CCE509F6-7419-4748-8370-0FF677DB1E64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{67B2143E-ABC5-4D55-8580-BDCBC78FDD87}.Release|Any CPU.ActiveCfg = Release|x64
 		{67B2143E-ABC5-4D55-8580-BDCBC78FDD87}.Release|Any CPU.Build.0 = Release|x64
 		{67B2143E-ABC5-4D55-8580-BDCBC78FDD87}.Release|Any CPU.Deploy.0 = Release|x64
+		{CCE509F6-7419-4748-8370-0FF677DB1E64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE509F6-7419-4748-8370-0FF677DB1E64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE509F6-7419-4748-8370-0FF677DB1E64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE509F6-7419-4748-8370-0FF677DB1E64}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

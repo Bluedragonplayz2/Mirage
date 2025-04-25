@@ -9,7 +9,35 @@
     mc:Ignorable="d"
     Title="WinUI_Application_Experiment">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+    <Grid x:Name="MainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" x:Name="Header" Background="#4B4A4A">
+            
+        </Grid>
+        <Grid Grid.Row="1" x:Name="Content" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" MaxWidth="700"/>
+                <ColumnDefinition Width="6*"/>
+            </Grid.ColumnDefinitions>
+            <Grid  x:Name="ListContent" Background=" #123A47">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <Grid Background=" #421A27"></Grid>
+                <Grid Grid.Row="1"></Grid>
+            </Grid>
+            <Grid Grid.Column="1" x:Name="DynamicContent">
+                
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Row="2" x:Name="Footer" Background="#C4AACD"> 
+            
+        </Grid>
+    </Grid>
 </Window>
